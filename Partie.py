@@ -14,6 +14,7 @@ class Partie:
         self.goban = [[None for i in range(taille)] for j in range(taille)]
 
     def affiche_goban(self):
+        """Affiche dans le terminal le goban"""
         for ligne in self.goban:
             for colonne in ligne:
                 print(colonne, end = ' ')
