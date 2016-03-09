@@ -53,7 +53,12 @@ class Partie:
                 # Pion
                 else:
                     #print('O', end = HR_LINE * 2)
-                    cprint(colonne + HR_LINE * 2, bg = "brown", end = '')
+                    if colonne == 0:
+                        cprint("0", bg = "brown", end = '')
+                        cprint(HR_LINE * 2, fg = "white", bg = "brown", end = '')
+                    else:
+                        cprint("0", fg = "black", bg = "brown", end = '')
+                        cprint(HR_LINE * 2, fg = "white", bg = "brown", end = '')
             print("")
             cprint('    ', bg = "brown", end = '')
 
@@ -113,10 +118,11 @@ def boucle_jeu():
         coord = input("\n>> ")
         # On parse l'entrée
         ret = parse_coord(coord)
-        if ret:
+        if ret == True:
             sys.exit(0)
         # On pose le pion
-        ret = p.pose_pion(colonne, ligne, tour % 2)
+        else:
+            ret = p.pose_pion(ret[0], ret[1], tour % 2)
         
         # Si c'est valide
         if ret:
