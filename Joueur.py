@@ -61,4 +61,16 @@ class Joueur:
                 if self.number == Partie.goban[i][j]:
                     value += 1
         self.score = value
-            
+    
+    def choose_moove(joueur):
+        """
+        Determine le mouvement du joueur
+        joueur : int, 0 ou 1
+        """
+        if joueur :
+            ligne = input(" entrez votre numero de ligne de type int entre 1 et taille ")
+            column = input(" entrez votre numero de colonne de type int entre 1 et taille ")
+        else : 
+            print(" Au tour de l IA ")
+        return( ligne, column )
+        
