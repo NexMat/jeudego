@@ -41,7 +41,7 @@ class Joueur:
         begin : float, la valeur du début du tour 
         return : rien
         """
-        if (self.tour % 2) )== (joueur % 2):
+        if (self.tour % 2)== (joueur % 2):
             print("C'est pas normal")
         else :
             end = time.time()
@@ -61,7 +61,20 @@ class Joueur:
                 if self.number == Partie.goban[i][j]:
                     value += 1
         self.score = value
-            
+    
+    def choose_moove(joueur):
+        """
+        Determine le mouvement du joueur
+        joueur : int, 0 ou 1
+        """
+        if joueur :
+            ligne = input(" entrez votre numero de ligne de type int entre 1 et taille ")
+            column = input(" entrez votre numero de colonne de type int entre 1 et taille ")
+        else : 
+            print(" Au tour de l IA ")
+        return( ligne, column )
+        
+    
             
     pass
 
