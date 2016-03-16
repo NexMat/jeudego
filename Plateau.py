@@ -92,6 +92,49 @@ class Plateau:
         self.goban[lgn][col] = joueur
 
         return True
+    
+        #Préviens l'autre joueur s'il une de ces pièces est en atari à cause du coup joué.
+        
+    
+    
+    def testercoup(self,colonne,ligne,joueur):
+        """Tester le coup choisi par le joueurs.
+         colonne (lettre): Désigne la colonne dans laquelle la pièce sera posée.
+        ligne   (nombre): Désigne la ligne   dans laquelle la pièce sera posée.
+        joueur  (nombre): Désigne le joueur qui joue, 0 pour noir et 1 pour blanc.
+        Retour: True ou False selon si l'opération est possible ou non."""
+        
+        # On transforme la lettre de la colonne en nombre pour le tableau
+        col = ord(colonne) - 65
+        if col < 0 or col >= self.taille:
+            return False
+
+        # On adapte le numéro de ligne à l'utilisation du tableau
+        lgn = int(ligne) - 1
+        if lgn < 0 or lgn >= self.taille:
+            return False
+    
+        #règle du ko
+        if self.goban[lgn+1][col]==self.goban[lgn-1][col]==self.goban[lgn][col-1]==self.goban[lgn][col+1]==(joueur+1)%2:
+            if self.goban[lgn][col-2]==self.goban[lgn+1][col-1]==self.goban[lgn-1][col-1]==joueur:
+                return False
+            else:
+                return True
+            elif self.goban[lgn-1][col-1]==self.goban[lgn-2][col]==self.goban[lgn-1][col+1]==joueur:
+                return False
+            else:
+                return True
+            elif self.goban[lgn-1][col+1]==self.goban[lgn][col+2]==self.goban[lgn+1][col+1]==joueur:
+                return False
+            else:
+                return True
+            elif self.goban[lgn+1][col+1]==self.goban[lgn+2][col]==self.goban[lgn+1][col-1]==joueur:
+                return False
+            else:
+                return True
+        else:
+             return True
+    
 
 if __name__ == '__main__':
     p = Plateau(5)
