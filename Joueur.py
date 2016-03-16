@@ -41,7 +41,7 @@ class Joueur:
         begin : float, la valeur du début du tour 
         return : rien
         """
-        if (self.tour % 2) )== (joueur % 2):
+        if (self.tour % 2) == (joueur % 2):
             print("C'est pas normal")
         else :
             end = time.time()
@@ -62,6 +62,3 @@ class Joueur:
                     value += 1
         self.score = value
             
-            
-    pass
-
