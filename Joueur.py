@@ -1,7 +1,7 @@
 """
 Joueur
 @author: Mathieu, Robin & Théo
-last update: 09-03-2016
+last update: 16-03-2016
 """
 
 import time
@@ -17,24 +17,51 @@ class Joueur:
             number : int, numero du joueur : 0 ou 1
         """
         self.humanity = humanity
-        this.number = number
+        self.number = number
         self.clock = 0
         self.score = score
         
         
-    def update_clock(tour,joueur):
-        """test à réaliser dans partie :
-            if (tour % 2) == (joueur % 2):
+    def begin_tour (joueur):
         """
-        begin = time.time()
-        while (tour % 2) == (joueur % 2):
-            end = time.time()
-        if (tour % 2) != (joueur % 2):
-            end2 = time.time()
-        med = (end+end2)/2
-        clock += med - begin
+        Determine le moment ou le joueur commence a joueur
+        joueur : int, 0 ou 1
+        Return : float, temps en secondes
+        """
+        if (self.tour % 2) == (joueur % 2):
+            begin = time.time()
+        else :
+            print("Pas mon tour")
+        return(begin)
         
-    
+    def update_clock(joueur,begin):
+        """
+        Modifie le temps de jeu du joueur
+        joueur : int, 0 ou 1
+        begin : float, la valeur du début du tour 
+        return : rien
+        """
+        if (self.tour % 2) )== (joueur % 2):
+            print("C'est pas normal")
+        else :
+            end = time.time()
+            self.clock += (end - begin)
+            
+    def update_number(joueur):
+        """
+        Actualise le score du joueur a la fin d'un tour
+        joueur : int, 0 ou 1
+        return : rien
+        """
+        
+        self.score = 0
+        value = 0
+        for i in range(len(Partie.goban)):
+            for j in range(len(Partie.goban)):
+                if self.number == Partie.goban[i][j]:
+                    value += 1
+        self.score = value
+            
             
     pass
 
