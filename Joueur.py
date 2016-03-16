@@ -9,7 +9,7 @@ import time
 class Joueur:
     """ Modélise les caractéristiques du joueur """
     
-    def __init__(self, humanity, number, clock = 0, score = 0):
+    def __init__(self, humanity, number, score = 0):
         """ Constructeur : Definit les caracteristiques du joueur 
             humanity : int (0 ou 1) qui définit si le joueur est humain(1) ou non(0)
             clock : float, temps de jeu courant du joueur
@@ -18,6 +18,8 @@ class Joueur:
         """
         self.humanity = humanity
         this.number = number
+        self.clock = 0
+        self.score = score
         
         
     def update_clock(tour,joueur):
