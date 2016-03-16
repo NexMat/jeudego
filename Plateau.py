@@ -21,7 +21,7 @@ class Plateau:
         # On crée un tableau carré grâce à la taille passée en paramètre
         self.goban = [[None for i in range(taille)] for j in range(taille)]
 
-    def affiche_goban(self):
+    def afficher(self):
         """Affiche dans le terminal le goban"""
         # Affichage des lettres des colonnes
         cprint('    ', bg = "brown", end = '')
