@@ -72,5 +72,8 @@ class Joueur:
             column = input(" entrez votre numero de colonne de type int entre 1 et taille ")
         else : 
             print(" Au tour de l IA ")
+        if ligne < 0 or  ligne >= taille :
+            return ("error")
+        if column < 0 or column >= taille :
+            return ("error")
         return( ligne, column )
-        

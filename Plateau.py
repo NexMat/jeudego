@@ -115,9 +115,18 @@ class Plateau:
             return False
     
         #règle du ko
-        if lgn+1 >=self.taille or lgn-1<0 or col+1>=self.taille or col-1<0: 
-            return False
-        else:
+        #if lgn+1 >=self.taille:
+        #    if self.goban[lgn][col+1]==self.goban[lgn][col-1]==self.goban[lgn-1][col]==(joueur+1)%2 
+        #    and self.goban[lgn-2][col]==self.goban[lgn-1][col-1]==self.goban[lgn-1][col+1]==joueur:
+        #        return False
+        #if lgn-1<0:
+                
+            
+            
+        #    or col+1>=self.taille or col-1<0: 
+        
+        
+            
             if self.goban[lgn+1][col]==self.goban[lgn-1][col]==self.goban[lgn][col-1]==self.goban[lgn][col+1]==(joueur+1)%2:
                 if self.goban[lgn][col-2]==self.goban[lgn+1][col-1]==self.goban[lgn-1][col-1]==joueur:
                     return False
