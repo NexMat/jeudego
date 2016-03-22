@@ -114,19 +114,37 @@ class Plateau:
         if lgn < 0 or lgn >= self.taille:
             return False
     
-        #règle du ko
-        #if lgn+1 >=self.taille:
-        #    if self.goban[lgn][col+1]==self.goban[lgn][col-1]==self.goban[lgn-1][col]==(joueur+1)%2 
-        #    and self.goban[lgn-2][col]==self.goban[lgn-1][col-1]==self.goban[lgn-1][col+1]==joueur:
-        #        return False
-        #if lgn-1<0:
-                
-            
-            
-        #    or col+1>=self.taille or col-1<0: 
+        """règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
+        un état idetentique à l'un de ceux qu'il lui avait était déjà donné."""
         
+        """ Cas d'un possible ko sur les bords du bogan"""
         
-            
+        #1er car: le coup testé est à la dernière ligne du bogan
+        if lgn+1 >=self.taille:
+            if self.goban[lgn][col+1]==self.goban[lgn][col-1]==self.goban[lgn-1][col]==(joueur+1)%2 
+            and self.goban[lgn-2][col]==self.goban[lgn-1][col-1]==self.goban[lgn-1][col+1]==joueur:
+                return False
+        #2ème cas : le coup testé est à la première ligne du bogan
+        elif lgn-1<0:
+            if self.goban[lgn][col-1]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2
+            and self.goban[lgn+1][col-1]==self.goban[lgn+1][col+1]==self.goban[lgn+2][col]==joueur:
+                return False
+        
+        #3ème cas : le coup testé est à la dernière colonne du bogan
+        elif col+1>=self.taille:
+            if self.goban[lgn-1][col]==self.goban[lgn+1][col]==self.goban[lgn][col-1]==(joueur+1)%2
+            and self.goban[lgn-1][col-1]==self.goban[lgn][col-2]==self.goban[lgn+1][col-1]:
+                return False
+       
+        #4ème cas : le coup testé est à la première colonne du bogan
+        elif col-1<0:
+            if self.goban[lgn-1][col]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2
+            and self.goban[lgn-1][col+1]==self.goban[lgn][col+2]==self.goban[lgn+1][col+1]==joueur:
+                return False
+        
+        """ Cas d'un possible ko dans le bogan"""    
+        
+        else:
             if self.goban[lgn+1][col]==self.goban[lgn-1][col]==self.goban[lgn][col-1]==self.goban[lgn][col+1]==(joueur+1)%2:
                 if self.goban[lgn][col-2]==self.goban[lgn+1][col-1]==self.goban[lgn-1][col-1]==joueur:
                     return False
