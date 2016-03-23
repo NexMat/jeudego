@@ -86,7 +86,7 @@ class Plateau:
         ligne=i
         colonne=j
         if self.goban[i][j-1]==(joueur+1)%2 and self.goban[i-1][j-1]==self.goban[i+1][j-1]==joueur:
-            while self.goban[i][j-2]==self.goban[i-1][j-2]==self.goban[i+1][j-2]!==null:
+            while self.goban[i][j-2]==self.goban[i-1][j-2]==self.goban[i+1][j-2]!=null:
                 j=j-1
                 if self.goban[i][j-2]==(joueur+1)%2 and self.goban[i-1][j-2]==self.goban[i+1][j-2]==joueur:
                     colonne=chr(j+65)
@@ -94,7 +94,7 @@ class Plateau:
                     print("Le joueur" + (joueur+1)%2 +"est en atari en " + ligne+","+colonne )
         #2ème cas : l'atari est en bout gauche.
         if self.goban[i][j+1]==(joueur+1)%2 and self.goban[i-1][j+1]==self.goban[i+1][j+1]==joueur:
-            while self.goban[i][j+2]==self.goban[i-1][j+2]==self.goban[i+1][j+2]!==null:
+            while self.goban[i][j+2]==self.goban[i-1][j+2]==self.goban[i+1][j+2]!=null:
                 j=j+1
                 if self.goban[i][j+2]==(joueur+1)%2 and self.goban[i-1][j+2]==self.goban[i+1][j+2]==joueur:
                     colonne=chr(j+65)
@@ -102,7 +102,7 @@ class Plateau:
                     print("Le joueur"+(joueur+1)%2+"est en atari en"+ligne+","+colonne)
         # 3ème cas : l'atair est en bout haut.
         if self.goban[i+1][j]==(joueur+1)%2 and self.goban[i+1][j+1]==self.goban[i+1][j-1]==joueur:
-            while self.goban[i+2][j]==self.goban[i+2][j+1]==self.goban[i+2][j-1]!==null:
+            while self.goban[i+2][j]==self.goban[i+2][j+1]==self.goban[i+2][j-1]!=null:
                 i=i+1
                 if self.goban[i+2][j]==(joueur+1)%2 and self.goban[i+2][j+1]==self.goban[i+2][j-1]==joueur:
                     colonne=chr(j+65)
