@@ -77,4 +77,5 @@ class Joueur:
         if column < 0 or column >= taille :
             return ("error")
         return( ligne, column )
-print("test")
+
+
