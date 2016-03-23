@@ -81,6 +81,37 @@ class Plateau:
     
         #Préviens l'autre joueur s'il une de ces pièces est en atari à cause du coup joué.
         
+        #les 4 prochains cas sont quand la dernière posée est en bout pour créer l'atari
+        #1er cas : l'atari est en bout droit.
+        ligne=i
+        colonne=j
+        if self.goban[i][j-1]==(joueur+1)%2 and self.goban[i-1][j-1]==self.goban[i+1][j-1]==joueur:
+            while self.goban[i][j-2]==self.goban[i-1][j-2]==self.goban[i+1][j-2]!==null:
+                j=j-1
+                if self.goban[i][j-2]==(joueur+1)%2 and self.goban[i-1][j-2]==self.goban[i+1][j-2]==joueur:
+                    colonne=chr(j+65)
+                    ligne=i+1
+                    print("Le joueur" + (joueur+1)%2 +"est en atari en " + ligne+","+colonne )
+        #2ème cas : l'atari est en bout gauche.
+        if self.goban[i][j+1]==(joueur+1)%2 and self.goban[i-1][j+1]==self.goban[i+1][j+1]==joueur:
+            while self.goban[i][j+2]==self.goban[i-1][j+2]==self.goban[i+1][j+2]!==null:
+                j=j+1
+                if self.goban[i][j+2]==(joueur+1)%2 and self.goban[i-1][j+2]==self.goban[i+1][j+2]==joueur:
+                    colonne=chr(j+65)
+                    ligne=i+1
+                    print("Le joueur"+(joueur+1)%2+"est en atari en"+ligne+","+colonne)
+        # 3ème cas : l'atair est en bout haut.
+        if self.goban[i+1][j]==(joueur+1)%2 and self.goban[i+1][j+1]==self.goban[i+1][j-1]==joueur:
+            while self.goban[i+2][j]==self.goban[i+2][j+1]==self.goban[i+2][j-1]!==null:
+                i=i+1
+                if self.goban[i+2][j]==(joueur+1)%2 and self.goban[i+2][j+1]==self.goban[i+2][j-1]==joueur:
+                    colonne=chr(j+65)
+                    ligne=i+1
+                    print("Le joueur"+(joueur+1)%2+"est en atari en"+ligne+","+colonne)
+                    
+                    
+                    
+        
     
     
     def tester_coup(self, colonne, ligne, joueur):
@@ -111,21 +142,21 @@ class Plateau:
         #""" Cas d'un possible ko sur les bords du bogan"""
         
         #1er cas: le coup testé est à la dernière ligne du bogan
-        if lgn+1 >=self.taille:
+        if lgn==self.taille:
             if self.goban[lgn][col+1]==self.goban[lgn][col-1]==self.goban[lgn-1][col]==(joueur+1)%2 and self.goban[lgn-2][col]==self.goban[lgn-1][col-1]==self.goban[lgn-1][col+1]==joueur:
                 return False
         #2ème cas : le coup testé est à la première ligne du bogan
-        elif lgn-1<0:
+        elif lgn==0:
             if self.goban[lgn][col-1]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2 and self.goban[lgn+1][col-1]==self.goban[lgn+1][col+1]==self.goban[lgn+2][col]==joueur:
                 return False
         
         #3ème cas : le coup testé est à la dernière colonne du bogan
-        elif col+1>=self.taille:
+        elif col==self.taille:
             if self.goban[lgn-1][col]==self.goban[lgn+1][col]==self.goban[lgn][col-1]==(joueur+1)%2 and self.goban[lgn-1][col-1]==self.goban[lgn][col-2]==self.goban[lgn+1][col-1]:
                 return False
        
         #4ème cas : le coup testé est à la première colonne du bogan
-        elif col-1<0:
+        elif col==0:
             if self.goban[lgn-1][col]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2 and self.goban[lgn-1][col+1]==self.goban[lgn][col+2]==self.goban[lgn+1][col+1]==joueur:
                 return False
         
