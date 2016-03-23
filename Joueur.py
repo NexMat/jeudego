@@ -1,4 +1,4 @@
-"""
+﻿"""
 Joueur
 @author: Mathieu, Robin & Théo
 last update: 16-03-2016
@@ -77,3 +77,4 @@ class Joueur:
         if column < 0 or column >= taille :
             return ("error")
         return( ligne, column )
+print("test")
