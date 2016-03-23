@@ -16,7 +16,7 @@ options = None
 class Partie:
     """Modélise une partie de jeu de Go."""
 
-    def __init__(self, taille = 5):
+    def __init__(self, taille = 9):
         """Crée une Partie. 
         Partie a comme attribut le goban, ie le plateau de jeu dont la taille sera passée en paramètre."""
         self.tour  = 0
@@ -42,7 +42,7 @@ class Partie:
 
         cprint(" Au tour du joueur ", bg = "blue", end = "")
         # Tour du joueur noir
-        if self.tour % 2 == 0:
+        if self.tour % 2 == 1:
             cprint("noir ", fg = "black",  bg = "blue", end = "")
         # Tour du joueur blanc
         else: 
@@ -50,6 +50,9 @@ class Partie:
         cprint(">> ", fg = "white",  bg = "blue", end = "")
 
 def boucle_jeu(p):
+    global args
+    global options
+
     while True:
         p.afficher_tour()
 
@@ -58,14 +61,17 @@ def boucle_jeu(p):
         # On parse l'entrée
         ret = parse_coord(coord)
         if ret == True:
+            print()
             sys.exit(0)
         # On pose le pion
         else:
-            if p.goban.testercoup(ret[0], ret[1], p.tour % 2):
-                print("ok")
+            if p.goban.tester_coup(ret[0], ret[1], p.tour % 2):
+                cprint("OK")
                 ret = p.goban.pose_pion(ret[0], ret[1], p.tour % 2)
             else:
-                print("erreur")
+                cprint("Erreur", fg = "red")
+                if options.test_mode == True:
+                    sys.exit(1)
                 ret = False
         
         # Si c'est valide
@@ -87,7 +93,7 @@ def read_opt():
     # Parsing size
     parser.add_option("-s", "--size",
         action = "store",
-        type = "string",
+        type = "int",
         dest = "size",
         help = "Determines the size of the goban",
         default = "9")
@@ -97,19 +103,26 @@ def read_opt():
         type = "string",
         dest = "player1",
         help = "Determines the type of player 1: human or ai",
-        default = "human")
+        default = "player1")
     # Parsing player 2
     parser.add_option("--player2",
         action = "store",
         type = "string",
         dest = "player2",
         help = "Determines the type of player 2: human or ai",
-        default = "human")
+        default = "player2")
+    # Parsing test mode
+    parser.add_option("-t", "--test",
+        action = "store_true",
+        dest = "test_mode",
+        help = "Test mode (default false). In test mode, any error will stop the program",
+        default = "False")
     options, args = parser.parse_args(sys.argv)
 
 if __name__ == '__main__':
+    read_opt();
     # Création d'une nouvelle partie
-    p = Partie(15)
+    p = Partie(options.size)
 
     # Création des joueurs #TODO
     #j1 = Joueur()

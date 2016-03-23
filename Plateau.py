@@ -74,20 +74,6 @@ class Plateau:
         joueur  (nombre): Désigne le joueur qui joue, 0 pour noir et 1 pour blanc.
         Retour: True ou False selon si l'opération a réussi ou non."""
 
-        # On transforme la lettre de la colonne en nombre pour le tableau
-        col = ord(colonne) - 65
-        if col < 0 or col >= self.taille:
-            return False
-
-        # On adapte le numéro de ligne à l'utilisation du tableau
-        lgn = int(ligne) - 1
-        if lgn < 0 or lgn >= self.taille:
-            return False
-
-        # On vérifie que joueur est bien soit 1 soit 2
-        if joueur != 0 and joueur != 1:
-            return False
-
         # Si tout est valide, on pose la pièce
         self.goban[lgn][col] = joueur
 
@@ -97,7 +83,7 @@ class Plateau:
         
     
     
-    def testercoup(self,colonne,ligne,joueur):
+    def tester_coup(self, colonne, ligne, joueur):
         """Tester le coup choisi par le joueurs.
          colonne (lettre): Désigne la colonne dans laquelle la pièce sera posée.
         ligne   (nombre): Désigne la ligne   dans laquelle la pièce sera posée.
@@ -113,36 +99,37 @@ class Plateau:
         lgn = int(ligne) - 1
         if lgn < 0 or lgn >= self.taille:
             return False
+
+        # On vérifie que joueur est bien soit 1 soit 2
+        if joueur != 0 and joueur != 1:
+            return False
+
     
         """règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
         un état idetentique à l'un de ceux qu'il lui avait était déjà donné."""
         
-        """ Cas d'un possible ko sur les bords du bogan"""
+        #""" Cas d'un possible ko sur les bords du bogan"""
         
-        #1er car: le coup testé est à la dernière ligne du bogan
+        #1er cas: le coup testé est à la dernière ligne du bogan
         if lgn+1 >=self.taille:
-            if self.goban[lgn][col+1]==self.goban[lgn][col-1]==self.goban[lgn-1][col]==(joueur+1)%2 
-            and self.goban[lgn-2][col]==self.goban[lgn-1][col-1]==self.goban[lgn-1][col+1]==joueur:
+            if self.goban[lgn][col+1]==self.goban[lgn][col-1]==self.goban[lgn-1][col]==(joueur+1)%2 and self.goban[lgn-2][col]==self.goban[lgn-1][col-1]==self.goban[lgn-1][col+1]==joueur:
                 return False
         #2ème cas : le coup testé est à la première ligne du bogan
         elif lgn-1<0:
-            if self.goban[lgn][col-1]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2
-            and self.goban[lgn+1][col-1]==self.goban[lgn+1][col+1]==self.goban[lgn+2][col]==joueur:
+            if self.goban[lgn][col-1]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2 and self.goban[lgn+1][col-1]==self.goban[lgn+1][col+1]==self.goban[lgn+2][col]==joueur:
                 return False
         
         #3ème cas : le coup testé est à la dernière colonne du bogan
         elif col+1>=self.taille:
-            if self.goban[lgn-1][col]==self.goban[lgn+1][col]==self.goban[lgn][col-1]==(joueur+1)%2
-            and self.goban[lgn-1][col-1]==self.goban[lgn][col-2]==self.goban[lgn+1][col-1]:
+            if self.goban[lgn-1][col]==self.goban[lgn+1][col]==self.goban[lgn][col-1]==(joueur+1)%2 and self.goban[lgn-1][col-1]==self.goban[lgn][col-2]==self.goban[lgn+1][col-1]:
                 return False
        
         #4ème cas : le coup testé est à la première colonne du bogan
         elif col-1<0:
-            if self.goban[lgn-1][col]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2
-            and self.goban[lgn-1][col+1]==self.goban[lgn][col+2]==self.goban[lgn+1][col+1]==joueur:
+            if self.goban[lgn-1][col]==self.goban[lgn][col+1]==self.goban[lgn+1][col]==(joueur+1)%2 and self.goban[lgn-1][col+1]==self.goban[lgn][col+2]==self.goban[lgn+1][col+1]==joueur:
                 return False
         
-        """ Cas d'un possible ko dans le bogan"""    
+        #""" Cas d'un possible ko dans le bogan"""    
         
         else:
             if self.goban[lgn+1][col]==self.goban[lgn-1][col]==self.goban[lgn][col-1]==self.goban[lgn][col+1]==(joueur+1)%2:
