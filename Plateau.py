@@ -7,10 +7,6 @@ last update: 09-03-2016
 import sys
 from Colors import cprint
 
-HR_LINE = chr(9472)
-VR_LINE = chr(9474)
-INTERSE = chr(9532)
-
 class Plateau:
     """Modélise un plateau de jeu de Go."""
 
@@ -21,51 +17,6 @@ class Plateau:
         # On crée un tableau carré grâce à la taille passée en paramètre
         self.goban = [[None for i in range(taille)] for j in range(taille)]
 
-    def afficher(self):
-        """Affiche dans le terminal le goban"""
-        # Affichage des lettres des colonnes
-        cprint('    ', bg = "brown", end = '')
-        for i in range(len(self.goban[0])):
-            cprint(chr(65 + i) + '  ', bg = "brown", end = '')
-        print('')
-
-        # Première ligne de verticaux
-        cprint('    ', bg = "brown", end = '')
-        for i in self.goban[0]:
-            cprint(VR_LINE + '  ', bg = "brown", end = '')
-        print('')
-
-        nb_ligne = 1
-        # Pour chaque ligne
-        for ligne in self.goban:
-            # Affichages des numéros de ligne
-            cprint(repr(nb_ligne).rjust(2), bg = "brown", end = '')
-            nb_ligne += 1
-
-            # Lignes horizontales
-            cprint(HR_LINE * 2, bg = "brown", end = '')
-
-            # Affichage des intersections
-            for colonne in ligne:
-                # Intersection
-                if colonne == None:
-                    cprint(INTERSE + HR_LINE * 2, bg = "brown", end = '')
-                # Pion
-                else:
-                    #print('O', end = HR_LINE * 2)
-                    if colonne == 0:
-                        cprint("0", bg = "brown", end = '')
-                        cprint(HR_LINE * 2, fg = "white", bg = "brown", end = '')
-                    else:
-                        cprint("0", fg = "black", bg = "brown", end = '')
-                        cprint(HR_LINE * 2, fg = "white", bg = "brown", end = '')
-            print("")
-            cprint('    ', bg = "brown", end = '')
-
-            # Lignes verticales
-            for colonne in ligne:
-                cprint(VR_LINE + '  ', bg = "brown", end = '')
-            print('')
 
     def pose_pion(self, colonne, ligne, joueur):
         """Permet d'effectuer un tour de jeu.

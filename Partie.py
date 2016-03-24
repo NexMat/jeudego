@@ -5,6 +5,7 @@ last update: 21-02-2016
 """
 
 import sys
+from Gui import *
 from Joueur import *
 from Plateau import *
 from Colors import cprint
@@ -37,7 +38,7 @@ class Partie:
         cprint("\n----------------------------------\n", fg = "blue")
 
         # Affichage du goban
-        self.goban.afficher()
+        afficher_couleur(self.goban)
         print()
 
         cprint(" Au tour du joueur ", bg = "blue", end = "")
@@ -49,12 +50,42 @@ class Partie:
             cprint("blanc ", fg = "white",  bg = "blue", end = "")
         cprint(">> ", fg = "white",  bg = "blue", end = "")
 
+    def afficher_tour_min(self):
+        # On affiche le numéro du tour
+        print("\n        - Tour numéro", str(self.tour + 1), "-")
+        print("----------------------------------")
+        
+        # Score du joueur noir
+        print(" Joueur noir: 0 ", end = "")
+        #cprint(j1.score, fg = "black", bg = "blue", end = "")
+
+        # Score du joueur blanc
+        print("Joueur blanc: 0 ", end = "")
+        #cprint(j1.score, fg = "black", bg = "blue", end = "")
+        print("\n----------------------------------\n")
+
+        # Affichage du goban
+        afficher_min(self.goban)
+        print()
+
+        print(" Au tour du joueur ", end = "")
+        # Tour du joueur noir
+        if self.tour % 2 == 1:
+            print("noir ", end = "")
+        # Tour du joueur blanc
+        else: 
+            print("blanc ", end = "")
+        print(">> ", end = "")
+
 def boucle_jeu(p):
     global args
     global options
 
     while True:
-        p.afficher_tour()
+        if options.minim == True:
+       	    p.afficher_tour_min()
+        else:
+            p.afficher_tour()
 
         # Entrée des coordonnées
         coord = input(" ")
@@ -116,6 +147,12 @@ def read_opt():
         action = "store_true",
         dest = "test_mode",
         help = "Test mode (default false). In test mode, any error will stop the program",
+        default = "False")
+    # Parsing no color display
+    parser.add_option("-m", "--min",
+        action = "store_true",
+        dest = "minim",
+        help = "Minimalist display (default False). With minimalist display, colors are not used.",
         default = "False")
     options, args = parser.parse_args(sys.argv)
 
