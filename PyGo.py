@@ -7,7 +7,7 @@ last update: 21-02-2016
 import sys
 from Gui import *
 from Joueur import *
-from Plateau import *
+from Goban import *
 from Colors import cprint
 from optparse import OptionParser;
 
@@ -17,11 +17,11 @@ options = None
 class PyGo:
     """Models a Go game."""
 
-    def __init__(self, taille = 9):
+    def __init__(self, size = 9):
         """Creates a Go game. 
         Game a comme attribut le goban, ie le plateau de jeu dont la taille sera passée en paramètre."""
         self.tour  = 0
-        self.goban = Plateau(taille)
+        self.goban = Goban(size)
 
 def game_loop(p):
     global args
@@ -41,9 +41,9 @@ def game_loop(p):
             print()
             sys.exit(0)
         else:
-            if p.goban.tester_coup(ret[0], ret[1], p.tour % 2):
+            if p.goban.test_move(ret[0], ret[1], p.tour % 2):
                 # On pose le pion
-                ret = p.goban.pose_pion(ret[0], ret[1], p.tour % 2)
+                ret = p.goban.make_move(ret[0], ret[1], p.tour % 2)
             else:
                 cprint("Erreur: coup interdit", fg = "red")
                 if options.test_mode == True:
