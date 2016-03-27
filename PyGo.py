@@ -20,20 +20,23 @@ class PyGo:
     def __init__(self, size = 9):
         """Creates a Go game. 
         Game a comme attribut le goban, ie le plateau de jeu dont la taille sera passée en paramètre."""
-        self.tour  = 0
-        self.goban = Goban(size)
+        self.tour    = 0
+        self.goban   = Goban(size)
+        self.player1 = None
+        self.player2 = None
 
-def game_loop(p):
+def game_loop(game):
     global args
     global options
 
     while True:
         if options.minim == True:
-       	    round_display_min(p)
+       	    round_display_min(game)
         else:
-            round_display(p)
+            round_display(game)
 
         # Entrée des coordonnées
+        if 
         coord = input(" ")
         # On parse l'entrée
         ret = parse_coord(coord)
@@ -41,9 +44,9 @@ def game_loop(p):
             print()
             sys.exit(0)
         else:
-            if p.goban.test_move(ret[0], ret[1], p.tour % 2):
+            if game.goban.test_move(ret[0], ret[1], game.tour % 2):
                 # On pose le pion
-                ret = p.goban.make_move(ret[0], ret[1], p.tour % 2)
+                ret = game.goban.make_move(ret[0], ret[1], game.tour % 2)
             else:
                 cprint("Erreur: coup interdit", fg = "red")
                 if options.test_mode == True:
@@ -53,7 +56,7 @@ def game_loop(p):
         # Si c'est valide
         if ret:
             # On passe au tour suivant
-            p.tour += 1
+            game.tour += 1
 
 
 def parse_coord(coord):
@@ -114,9 +117,11 @@ if __name__ == '__main__':
     # Création d'une nouvelle partie
     game = PyGo(options.size)
 
-    # Création des joueurs #TODO
-    #j1 = Joueur()
-    #j2 = Joueur()
+    # Création des joueurs
+    p1 = Joueur(0, game)
+    p2 = Joueur(1, game)
+    game.player1 = p1
+    game.player2 = p2
 
     # Lancement de la boucle de jeu
     game_loop(game)

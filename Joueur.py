@@ -9,17 +9,18 @@ import time
 class Joueur:
     """ Modélise les caractéristiques du joueur """
     
-    def __init__(self, humanity, number, score = 0):
+    def __init__(self, number, game, isHuman = True, score = 0):
         """ Constructeur : Definit les caracteristiques du joueur 
-            humanity : int (0 ou 1) qui définit si le joueur est humain(1) ou non(0)
-            clock : float, temps de jeu courant du joueur
-            score : int, score du joueur
-            number : int, numero du joueur : 0 ou 1
+            isHuman : bool définit si le joueur est humain ou non
+            clock   : float, temps de jeu courant du joueur
+            score   : int, score du joueur
+            number  : int, numero du joueur : 0 ou 1
         """
-        self.humanity = humanity
-        self.number = number
-        self.clock = 0
-        self.score = score
+        self.isHuman = isHuman
+        self.number  = number
+        self.clock   = 0
+        self.score   = score
+        self.game    = game
         
         
     def begin_tour(joueur):
@@ -47,17 +48,16 @@ class Joueur:
             end = time.time()
             self.clock += (end - begin)
             
-    def update_number(joueur):
+    def update_score(self):
         """
         Actualise le score du joueur a la fin d'un tour
-        joueur : int, 0 ou 1
         return : rien
         """
         self.score = 0
         value = 0
-        for i in range(len(Partie.goban)):
-            for j in range(len(Partie.goban)):
-                if self.number == Partie.goban[i][j]:
+        for i in range(self.game.goban.taille):
+            for j in range(self.game.goban.taille):
+                if self.number == self.game.goban[i][j]:
                     value += 1
         self.score = value
     
@@ -67,7 +67,7 @@ class Joueur:
         joueur : int, 0 ou 1
         """
         if joueur :
-            inp = input("")
+            inp = input(" ")
         else : 
             print("Au tour de l'IA")
 
