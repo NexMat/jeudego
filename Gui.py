@@ -4,7 +4,7 @@ HR_LINE = chr(9472)
 VR_LINE = chr(9474)
 INTERSE = chr(9532)
 
-def afficher_couleur(plateau):
+def color_display(plateau):
     """Affiche dans le terminal le goban"""
     # Affichage des lettres des colonnes
     cprint('    ', bg = "brown", end = '')
@@ -50,7 +50,7 @@ def afficher_couleur(plateau):
             cprint(VR_LINE + '  ', bg = "brown", end = '')
         print('')
 
-def afficher_min(plateau):
+def display_min(plateau):
     """Affiche dans le terminal le goban"""
     # Affichage des lettres des colonnes
     print('    ', end = '')
@@ -96,7 +96,7 @@ def afficher_min(plateau):
             print(VR_LINE + '  ', end = '')
         print('')
 
-def afficher_tour(partie):
+def round_display(partie):
     # On affiche le numéro du tour
     cprint("\n        - Tour numéro", str(partie.tour + 1), "-", fg = "blue")
     cprint("----------------------------------", fg = "blue")
@@ -111,7 +111,7 @@ def afficher_tour(partie):
     cprint("\n----------------------------------\n", fg = "blue")
 
     # Affichage du goban
-    afficher_couleur(partie.goban)
+    color_display(partie.goban)
     print()
 
     cprint(" Au tour du joueur ", bg = "blue", end = "")
@@ -123,7 +123,7 @@ def afficher_tour(partie):
         cprint("blanc ", fg = "white",  bg = "blue", end = "")
     cprint(">> ", fg = "white",  bg = "blue", end = "")
 
-def afficher_tour_min(partie):
+def round_display_min(partie):
     # On affiche le numéro du tour
     print("\n        - Tour numéro", str(partie.tour + 1), "-")
     print("----------------------------------")
@@ -138,7 +138,7 @@ def afficher_tour_min(partie):
     print("\n----------------------------------\n")
 
     # Affichage du goban
-    afficher_min(partie.goban)
+    display_min(partie.goban)
     print()
 
     print(" Au tour du joueur ", end = "")

@@ -29,9 +29,9 @@ def game_loop(p):
 
     while True:
         if options.minim == True:
-       	    afficher_tour_min(p)
+       	    round_display_min(p)
         else:
-            afficher_tour(p)
+            round_display(p)
 
         # Entrée des coordonnées
         coord = input(" ")
