@@ -4,7 +4,6 @@ HR_LINE = chr(9472)
 VR_LINE = chr(9474)
 INTERSE = chr(9532)
 
-
 def afficher_couleur(plateau):
     """Affiche dans le terminal le goban"""
     # Affichage des lettres des colonnes
@@ -96,3 +95,58 @@ def afficher_min(plateau):
         for colonne in ligne:
             print(VR_LINE + '  ', end = '')
         print('')
+
+def afficher_tour(partie):
+    # On affiche le numéro du tour
+    cprint("\n        - Tour numéro", str(partie.tour + 1), "-", fg = "blue")
+    cprint("----------------------------------", fg = "blue")
+    
+    # Score du joueur noir
+    cprint(" Joueur noir: 0 ", fg = "black",  bg = "blue", end = "")
+    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+
+    # Score du joueur blanc
+    cprint("Joueur blanc: 0 ", fg = "white",  bg = "blue", end = "")
+    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+    cprint("\n----------------------------------\n", fg = "blue")
+
+    # Affichage du goban
+    afficher_couleur(partie.goban)
+    print()
+
+    cprint(" Au tour du joueur ", bg = "blue", end = "")
+    # Tour du joueur noir
+    if partie.tour % 2 == 1:
+        cprint("noir ", fg = "black",  bg = "blue", end = "")
+    # Tour du joueur blanc
+    else: 
+        cprint("blanc ", fg = "white",  bg = "blue", end = "")
+    cprint(">> ", fg = "white",  bg = "blue", end = "")
+
+def afficher_tour_min(partie):
+    # On affiche le numéro du tour
+    print("\n        - Tour numéro", str(partie.tour + 1), "-")
+    print("----------------------------------")
+    
+    # Score du joueur noir
+    print(" Joueur noir: 0 ", end = "")
+    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+
+    # Score du joueur blanc
+    print("Joueur blanc: 0 ", end = "")
+    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+    print("\n----------------------------------\n")
+
+    # Affichage du goban
+    afficher_min(partie.goban)
+    print()
+
+    print(" Au tour du joueur ", end = "")
+    # Tour du joueur noir
+    if partie.tour % 2 == 1:
+        print("noir ", end = "")
+    # Tour du joueur blanc
+    else: 
+        print("blanc ", end = "")
+    print(">>", end = "")
+

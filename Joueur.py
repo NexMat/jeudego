@@ -22,7 +22,7 @@ class Joueur:
         self.score = score
         
         
-    def begin_tour (joueur):
+    def begin_tour(joueur):
         """
         Determine le moment ou le joueur commence a joueur
         joueur : int, 0 ou 1
@@ -53,7 +53,6 @@ class Joueur:
         joueur : int, 0 ou 1
         return : rien
         """
-        
         self.score = 0
         value = 0
         for i in range(len(Partie.goban)):
@@ -62,20 +61,15 @@ class Joueur:
                     value += 1
         self.score = value
     
-    def choose_moove(joueur):
+    def choose_moove(self):
         """
         Determine le mouvement du joueur
         joueur : int, 0 ou 1
         """
         if joueur :
-            ligne = input(" entrez votre numero de ligne de type int entre 1 et taille ")
-            column = input(" entrez votre numero de colonne de type int entre 1 et taille ")
+            inp = input("")
         else : 
-            print(" Au tour de l IA ")
-        if ligne < 0 or  ligne >= taille :
-            return ("error")
-        if column < 0 or column >= taille :
-            return ("error")
-        return( ligne, column )
+            print("Au tour de l'IA")
 
+        return inp
 
