@@ -61,15 +61,15 @@ class Joueur:
                     value += 1
         self.score = value
     
-    def choose_moove(self):
+    def choose_move(self):
         """
         Determine le mouvement du joueur
-        joueur : int, 0 ou 1
+        return: les coordonnées entrées
         """
-        if joueur :
-            inp = input(" ")
+        if self.isHuman == True:
+            coord = input(" ")
         else : 
             print("Au tour de l'IA")
 
-        return inp
+        return coord
 

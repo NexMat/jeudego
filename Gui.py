@@ -35,10 +35,11 @@ def color_display(plateau):
                 cprint(INTERSE + HR_LINE * 2, bg = "brown", end = '')
             # Pion
             else:
-                #print('O', end = HR_LINE * 2)
-                if colonne == 0:
+                # Le joueur blanc
+                if colonne == 1:
                     cprint("0", bg = "brown", end = '')
                     cprint(HR_LINE * 2, fg = "white", bg = "brown", end = '')
+                # Le joueur noir
                 else:
                     cprint("0", fg = "black", bg = "brown", end = '')
                     cprint(HR_LINE * 2, fg = "white", bg = "brown", end = '')
@@ -81,12 +82,11 @@ def display_min(plateau):
                 print(INTERSE + HR_LINE * 2, end = '')
             # Pion
             else:
-                #print('O', end = HR_LINE * 2)
                 if colonne == 0:
                     print("0", end = '')
                     print(HR_LINE * 2, end = '')
                 else:
-                    print("0", end = '')
+                    print("1", end = '')
                     print(HR_LINE * 2, end = '')
         print("")
         print('    ', end = '')
@@ -114,9 +114,10 @@ def round_display(partie):
     color_display(partie.goban)
     print()
 
+    # Affichage de la ligne d'input
     cprint(" Au tour du joueur ", bg = "blue", end = "")
     # Tour du joueur noir
-    if partie.tour % 2 == 1:
+    if partie.tour % 2 == 0:
         cprint("noir ", fg = "black",  bg = "blue", end = "")
     # Tour du joueur blanc
     else: 
@@ -143,7 +144,7 @@ def round_display_min(partie):
 
     print(" Au tour du joueur ", end = "")
     # Tour du joueur noir
-    if partie.tour % 2 == 1:
+    if partie.tour % 2 == 0:
         print("noir ", end = "")
     # Tour du joueur blanc
     else: 

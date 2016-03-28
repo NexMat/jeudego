@@ -30,23 +30,33 @@ def game_loop(game):
     global options
 
     while True:
+        # Si c'est le tour du joueur 1
+        if game.tour % 2 == 0:
+            current_id     = 0
+            current_player = game.player1
+        # Si c'est le tour du joueur 2
+        else:
+            current_id     = 1
+            current_player = game.player2
+
+        # Affichage du goban
         if options.minim == True:
        	    round_display_min(game)
         else:
             round_display(game)
 
         # Entrée des coordonnées
-        if 
-        coord = input(" ")
+        coord = current_player.choose_move()
+
         # On parse l'entrée
         ret = parse_coord(coord)
         if ret == True:
             print()
             sys.exit(0)
         else:
-            if game.goban.test_move(ret[0], ret[1], game.tour % 2):
+            if game.goban.test_move(ret[0], ret[1], current_id):
                 # On pose le pion
-                ret = game.goban.make_move(ret[0], ret[1], game.tour % 2)
+                ret = game.goban.make_move(ret[0], ret[1], current_id)
             else:
                 cprint("Erreur: coup interdit", fg = "red")
                 if options.test_mode == True:
@@ -118,13 +128,12 @@ if __name__ == '__main__':
     game = PyGo(options.size)
 
     # Création des joueurs
-    p1 = Joueur(0, game)
-    p2 = Joueur(1, game)
+    p1 = Joueur(0, game) # Joueur noir
+    p2 = Joueur(1, game) # Joueur blanc
     game.player1 = p1
     game.player2 = p2
 
     # Lancement de la boucle de jeu
     game_loop(game)
-    #boucle_jeu(p, j1, j2) #TODO
 
 
