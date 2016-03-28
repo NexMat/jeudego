@@ -30,43 +30,6 @@ class Goban:
 
         return True
     
-        #Préviens l'autre joueur s'il une de ces pièces est en atari à cause du coup joué.
-        
-        #les 4 prochains cas sont quand la dernière pierre posée est en bout pour créer l'atari
-        #1er cas : l'atari est en bout gauche.
-        ligne=i
-        colonne=j
-        if self.goban[i][j-1]==(joueur+1)%2 and self.goban[i-1][j-1]==self.goban[i+1][j-1]==joueur:
-            while self.goban[i][j-2]==self.goban[i-1][j-2]==self.goban[i+1][j-2]!=null:
-                j=j-1
-            if self.goban[i][j-1]==(joueur+1)%2 and self.goban[i-1][j-1]==self.goban[i+1][j-1]==joueur:
-                colonne=chr(j+65)
-                ligne=i+1
-                print("Le joueur" + (joueur+1)%2 +"est en atari en " + ligne+","+colonne )
-        #2ème cas : l'atari est en bout droit.
-        if self.goban[i][j+1]==(joueur+1)%2 and self.goban[i-1][j+1]==self.goban[i+1][j+1]==joueur:
-            while self.goban[i][j+2]==self.goban[i-1][j+2]==self.goban[i+1][j+2]!=null:
-                j=j+1
-            if self.goban[i][j+1]==(joueur+1)%2 and self.goban[i-1][j+1]==self.goban[i+1][j+1]==joueur:
-                colonne=chr(j+65)
-                ligne=i+1
-                print("Le joueur"+(joueur+1)%2+"est en atari en"+ligne+","+colonne)
-        # 3ème cas : l'atari est en bout bas.
-        if self.goban[i+1][j]==(joueur+1)%2 and self.goban[i+1][j+1]==self.goban[i+1][j-1]==joueur:
-            while self.goban[i+2][j]==self.goban[i+2][j+1]==self.goban[i+2][j-1]!=null:
-                i=i+1
-            if self.goban[i+1][j]==(joueur+1)%2 and self.goban[i+1][j+1]==self.goban[i+1][j-1]==joueur:
-                colonne=chr(j+65)
-                ligne=i+1
-                print("Le joueur"+(joueur+1)%2+"est en atari en"+ligne+","+colonne)
-        #4 ème cas : l'atari est en bout en haut.
-        if self.goban[i-1][j]==(joueur+1)%2 and self.goban[i-1][j+1]==self.goban[i-1][j-1]==joueur:
-            while self.goban[i-2][j]==self.goban[i-2][j+1]==self.goban[i-2][j-1]!=null:
-                i=i-1
-            if self.goban[i-1][j]==(joueur+1)%2 and self.goban[i-1][j+1]==self.goban[i-1][j-1]==joueur:
-                colonne=chr(j+65)
-                ligne=i+1
-                print("Le joueur"+(joueur+1)%2+"est en atari en"+ligne+","+colonne)
     
     def test_move(self, col, lgn, joueur):
         """Tester le coup choisi par le joueurs.
@@ -126,7 +89,45 @@ class Goban:
                     return True
             else:
                 return True
-    
+                
+    def neighbourg(joueur,lgn,col,L,L0,L1):
+        """ Renvoi la liste des coups joués et la liste des voisins.
+            L : liste des coups joués (joueur,ligne,colonne,indice)
+            L0 : liste des voisins pour le joueur 0 (indice,[ligne,colonne],...)
+            L1: liste des voisins pour le joueur 1"""
+        number_neighbourg=[]
+        for i in range L[0]:
+            if joueur==L[i][0]:
+                if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1)):
+                    indice=L[i][3]
+                    if joueur==0:
+                        L0[indice]+=[L[i][1],L[i][2]]
+                        L+=[joueur,L[i][1],L[i][2],indice]
+                        for k in range (len(number_neighbourg)):
+                            if number_neighbourg[k]!=indice:
+                                number_neighbourg+=[indice]
+                    if joueur==1:
+                        L1[indice]+=[L[i][1],L[i][2]]
+                        L+=[joueur,L[i][1],L[i][2],indice]
+                        for k in range (len(number_neighbourg)):
+                            if number_neighbourg[k]!=indice:
+                                number_neighbourg+=[indice]
+        if len(number_neighbourg)>1:
+            if joueur==0:
+                for i in range (len(number_neighbourg)):
+                    L0[number_neighbourg[0]]+=L0[number_neighbourg[i][1:]
+                    L0.remove(L0[number_neighbourg[i])
+                for i in range (len(L0)):
+                    L0[i][0]=i
+            if joueur==1:        
+                for i in range (len(number_neighbourg)):
+                    L1[number_neighbourg[0]]+=L1[number_neighbourg[i][1:]
+                    L1.remove(L1[number_neighbourg[i])
+                for i in range (len(L1)):
+                    L1[i][0]=i
+        return(L,L0,L1)
 
 if __name__ == '__main__':
     p = Plateau(5)
+    
+    
