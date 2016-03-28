@@ -94,9 +94,10 @@ class Goban:
         """ Renvoi la liste des coups joués et la liste des voisins.
             L : liste des coups joués (joueur,ligne,colonne,indice)
             L0 : liste des voisins pour le joueur 0 (indice,[ligne,colonne],...)
-            L1: liste des voisins pour le joueur 1"""
+            L1: liste des voisins pour le joueur 1
+        """
         number_neighbourg=[]
-        for i in range L[0]:
+        for i in range (len(L)):
             if joueur==L[i][0]:
                 if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1)):
                     indice=L[i][3]
@@ -116,10 +117,10 @@ class Goban:
             if joueur==0:
                 for i in range (len(number_neighbourg)):
                     L0[number_neighbourg[0]]+=L0[number_neighbourg[i][1:]
-                    L0.remove(L0[number_neighbourg[i])
+                    L0.remove(L0[number_neighbourg[i]])  # remove ne marche pas avec des matrices ?
                 for i in range (len(L0)):
                     L0[i][0]=i
-            if joueur==1:        
+            if joueur:        
                 for i in range (len(number_neighbourg)):
                     L1[number_neighbourg[0]]+=L1[number_neighbourg[i][1:]
                     L1.remove(L1[number_neighbourg[i])
