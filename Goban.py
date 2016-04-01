@@ -99,7 +99,9 @@ class Goban:
         number_neighbourg=[]
         for i in range (len(L)):
             if joueur==L[i][0]:
-                if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1)):
+                if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1))
+                or ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col))
+                or ((L[i][1]==lgn) and (L[i][2]==col+1 or L[i][2]==col-1)):
                     indice=L[i][3]
                     if joueur==0:
                         L0[indice]+=[L[i][1],L[i][2]]
