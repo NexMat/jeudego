@@ -102,12 +102,10 @@ def round_display(partie):
     cprint("----------------------------------", fg = "blue")
     
     # Score du joueur noir
-    cprint(" Joueur noir: 0 ", fg = "black",  bg = "blue", end = "")
-    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+    cprint(" Joueur noir: " + str(partie.player1.score), fg = "black", bg = "blue", end = "")
 
     # Score du joueur blanc
-    cprint("Joueur blanc: 0 ", fg = "white",  bg = "blue", end = "")
-    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+    cprint(" Joueur blanc: " + str(partie.player2.score) + " ", fg = "white", bg = "blue", end = "")
     cprint("\n----------------------------------\n", fg = "blue")
 
     # Affichage du goban

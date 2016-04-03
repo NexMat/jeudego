@@ -1,7 +1,7 @@
 """
 Plateau
 @author: Nexmat
-last update: 28-03-2016
+last update: 03-04-2016
 """
 
 import sys
@@ -19,7 +19,7 @@ class Goban:
 
 
     def make_move(self, colonne, ligne, joueur):
-        """Permet d'effectuer un tour de jeu.
+       """Permet d'effectuer un tour de jeu.
         colonne (lettre): Désigne la colonne dans laquelle la pièce sera posée.
         ligne   (nombre): Désigne la ligne   dans laquelle la pièce sera posée.
         joueur  (nombre): Désigne le joueur qui joue, 0 pour noir et 1 pour blanc.
@@ -89,45 +89,46 @@ class Goban:
                     return True
             else:
                 return True
+
+        return True
                 
-    def neighbourg(joueur,lgn,col,L,L0,L1):
-        """ Renvoi la liste des coups joués et la liste des voisins.
-            L : liste des coups joués (joueur,ligne,colonne,indice)
-            L0 : liste des voisins pour le joueur 0 (indice,[ligne,colonne],...)
-            L1: liste des voisins pour le joueur 1"""
-        number_neighbourg=[]
-        for i in range L[0]:
-            if joueur==L[i][0]:
-                if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1)):
-                    indice=L[i][3]
-                    if joueur==0:
-                        L0[indice]+=[L[i][1],L[i][2]]
-                        L+=[joueur,L[i][1],L[i][2],indice]
-                        for k in range (len(number_neighbourg)):
-                            if number_neighbourg[k]!=indice:
-                                number_neighbourg+=[indice]
-                    if joueur==1:
-                        L1[indice]+=[L[i][1],L[i][2]]
-                        L+=[joueur,L[i][1],L[i][2],indice]
-                        for k in range (len(number_neighbourg)):
-                            if number_neighbourg[k]!=indice:
-                                number_neighbourg+=[indice]
-        if len(number_neighbourg)>1:
-            if joueur==0:
-                for i in range (len(number_neighbourg)):
-                    L0[number_neighbourg[0]]+=L0[number_neighbourg[i][1:]
-                    L0.remove(L0[number_neighbourg[i])
-                for i in range (len(L0)):
-                    L0[i][0]=i
-            if joueur==1:        
-                for i in range (len(number_neighbourg)):
-                    L1[number_neighbourg[0]]+=L1[number_neighbourg[i][1:]
-                    L1.remove(L1[number_neighbourg[i])
-                for i in range (len(L1)):
-                    L1[i][0]=i
-        return(L,L0,L1)
+    #def neighbourg(joueur,lgn,col,L,L0,L1):
+    #    """ Renvoi la liste des coups joués et la liste des voisins.
+    #        L : liste des coups joués (joueur,ligne,colonne,indice)
+    #        L0 : liste des voisins pour le joueur 0 (indice,[ligne,colonne],...)
+    #        L1: liste des voisins pour le joueur 1"""
+    #    number_neighbourg=[]
+    #    for i in range L[0]:
+    #        if joueur==L[i][0]:
+    #            if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1)):
+    #                indice=L[i][3]
+    #                if joueur==0:
+    #                    L0[indice]+=[L[i][1],L[i][2]]
+    #                    L+=[joueur,L[i][1],L[i][2],indice]
+    #                    for k in range (len(number_neighbourg)):
+    #                        if number_neighbourg[k]!=indice:
+    #                            number_neighbourg+=[indice]
+    #                if joueur==1:
+    #                    L1[indice]+=[L[i][1],L[i][2]]
+    #                    L+=[joueur,L[i][1],L[i][2],indice]
+    #                    for k in range (len(number_neighbourg)):
+    #                        if number_neighbourg[k]!=indice:
+    #                            number_neighbourg+=[indice]
+    #    if len(number_neighbourg)>1:
+    #        if joueur==0:
+    #            for i in range (len(number_neighbourg)):
+    #                L0[number_neighbourg[0]]+=L0[number_neighbourg[i][1:]
+    #                L0.remove(L0[number_neighbourg[i])
+    #            for i in range (len(L0)):
+    #                L0[i][0]=i
+    #        if joueur==1:        
+    #            for i in range (len(number_neighbourg)):
+    #                L1[number_neighbourg[0]]+=L1[number_neighbourg[i][1:]
+    #                L1.remove(L1[number_neighbourg[i])
+    #            for i in range (len(L1)):
+    #                L1[i][0]=i
+    #    return(L,L0,L1)
 
 if __name__ == '__main__':
-    p = Plateau(5)
-    
+    g = Goban()
     

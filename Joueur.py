@@ -57,7 +57,7 @@ class Joueur:
         value = 0
         for i in range(self.game.goban.taille):
             for j in range(self.game.goban.taille):
-                if self.number == self.game.goban[i][j]:
+                if self.number == self.game.goban.goban[i][j]:
                     value += 1
         self.score = value
     

@@ -1,7 +1,7 @@
 """
 Partie
 @author: Nexmat
-last update: 21-02-2016
+last update: 03-04-2016
 """
 
 import sys
@@ -39,6 +39,10 @@ def game_loop(game):
             current_id     = 1
             current_player = game.player2
 
+        # On recompte les scores
+        game.player1.update_score()
+        game.player2.update_score()
+
         # Affichage du goban
         if options.minim == True:
        	    round_display_min(game)
@@ -53,8 +57,11 @@ def game_loop(game):
         if ret == True:
             print()
             sys.exit(0)
+        elif ret == False:
+            cprint("Erreur: entree incorrecte", fg = "red")
         else:
-            if game.goban.test_move(ret[0], ret[1], current_id):
+            # Si le coup est possible
+            if game.goban.test_move(ret[0], ret[1], current_id) == True:
                 # On pose le pion
                 ret = game.goban.make_move(ret[0], ret[1], current_id)
             else:
@@ -62,7 +69,7 @@ def game_loop(game):
                 if options.test_mode == True:
                     sys.exit(1)
                 ret = False
-        
+
         # Si c'est valide
         if ret:
             # On passe au tour suivant
@@ -73,6 +80,10 @@ def parse_coord(coord):
     # Pour quitter
     if coord == 'q' or coord == 'quit':
         return True
+
+    # Mauvaises entrées
+    if len(coord) != 2:
+        return False
 
     # On transforme la lettre de la colonne en nombre pour le tableau
     col = ord(coord[0]) - 65
