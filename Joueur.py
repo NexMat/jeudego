@@ -23,7 +23,7 @@ class Joueur:
         self.game    = game
         
         
-    def begin_tour(joueur):
+    def begin_tour(self):
         """
         Determine le moment ou le joueur commence a joueur
         joueur : int, 0 ou 1
@@ -35,12 +35,12 @@ class Joueur:
             print("Pas mon tour")
         return(begin)
         
-    def update_clock(joueur,begin):
+    def update_clock(self,begin):
         """
         Modifie le temps de jeu du joueur
         joueur : int, 0 ou 1
         begin : float, la valeur du début du tour 
-        return : rien
+        return : none
         """
         if (self.tour % 2) == (joueur % 2):
             print("C'est pas normal")
@@ -51,7 +51,7 @@ class Joueur:
     def update_score(self):
         """
         Actualise le score du joueur a la fin d'un tour
-        return : rien
+        return : none
         """
         self.score = 0
         value = 0
