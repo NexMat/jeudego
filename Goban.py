@@ -155,9 +155,11 @@ def detect_territory(goban):
 
                 elif group_color(goban, group) == 1:
                     white_territory.append(group)
+    
+    print("\n\n\nBlack:", black_territory)
+    print("White:", white_territory)
 
-    print('\nWhite:', white_territory)
-    print('Black:', black_territory)
+    return black_territory, white_territory
 
 def is_in_territory(i, j):
     """Determine si la cellule en (i,j) est deja dans un groupe ou non"""
@@ -175,11 +177,11 @@ def is_in_territory(i, j):
     return False
 
 def get_neighbour(goban, i, j):
-    """Trouve les voisins directs d'une case
+    """Trouve les voisins directs d'une case et la case elle-meme
     Arg: goban, le goban concerne
          (i,j) les coordonnees
     Ret: La liste des voisins """
-    ret = []
+    ret = [(i, j)]
 
     # Pas la premiere ligne
     if not i == 0:
