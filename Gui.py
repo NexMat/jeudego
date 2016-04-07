@@ -129,11 +129,11 @@ def round_display_min(partie):
     
     # Score du joueur noir
     print(" Joueur noir: 0 ", end = "")
-    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+    #cprint(j1.score, fg = "black", bg = "blue", end = "") TODO
 
     # Score du joueur blanc
     print("Joueur blanc: 0 ", end = "")
-    #cprint(j1.score, fg = "black", bg = "blue", end = "")
+    #cprint(j1.score, fg = "black", bg = "blue", end = "") TODO
     print("\n----------------------------------\n")
 
     # Affichage du goban

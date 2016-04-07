@@ -52,7 +52,7 @@ class Goban:
         """règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
         un état idetentique à l'un de ceux qu'il lui avait était déjà donné."""
         
-        #""" Cas d'un possible ko sur les bords du bogan"""
+        # Cas d'un possible ko sur les bords du bogan
         
         #1er cas: le coup testé est à la dernière ligne du bogan
         if lgn==self.taille:
@@ -143,11 +143,21 @@ def detect_territory(goban):
     global black_territory
     global white_territory
 
+    black_territory = []
+    white_territory = []
+
     for i in range(goban.taille):
         for j in range(goban.taille):
             if goban.cell[i][j] == None and not is_in_territory(i,j):
                 group = find_group(goban, i, j, [])
-                print('groupe:', group)
+                if group_color(goban, group) == 0:
+                    black_territory.append(group)
+
+                elif group_color(goban, group) == 1:
+                    white_territory.append(group)
+
+    print('\nWhite:', white_territory)
+    print('Black:', black_territory)
 
 def is_in_territory(i, j):
     """Determine si la cellule en (i,j) est deja dans un groupe ou non"""
@@ -176,8 +186,7 @@ def get_neighbour(goban, i, j):
         ret.append((i-1, j))
     # Pas la première colonne
     if not j == 0:
-        ret.append((i, j-1))
-    # Pas la derniere ligne
+        ret.append((i, j-1)) # Pas la derniere ligne
     if not i == goban.taille - 1:
         ret.append((i+1, j))
     # Pas la première colonne
@@ -198,6 +207,27 @@ def find_group(goban, i, j, group):
             group.append((k,l))
             find_group(goban, k, l, group)
     return group
+
+def group_color(goban, group):
+    """Determine la couleur d'appartenance d'un groupe
+    Arg: goban, le goban concerne
+         group, le group dont la couleur est a determiner
+    Ret: la couleur, 0 pour noir, 1 pour blanc, 2 pour aucun"""
+    color = None
+    
+    # On parcourt les elements du groupe
+    for (i, j) in group:
+        # Pour chaque element, on determine les voisins
+        voisins = get_neighbour(goban, i, j)
+        # Parcours des voisins
+        for (k, l) in voisins:
+            if color == None:
+                color = goban.cell[k][l]
+
+            elif goban.cell[k][l] != None and goban.cell[k][l] != color:
+                return 2
+
+    return color
 
 
 if __name__ == '__main__':

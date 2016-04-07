@@ -71,7 +71,7 @@ def game_loop(game):
                 ret = False
 
         # TODO: Detection des territoires
-        #detect_territory(game.goban)
+        detect_territory(game.goban)
 
         # Si c'est valide
         if ret:
