@@ -70,6 +70,9 @@ def game_loop(game):
                     sys.exit(1)
                 ret = False
 
+        # TODO: Detection des territoires
+        #detect_territory(game.goban)
+
         # Si c'est valide
         if ret:
             # On passe au tour suivant

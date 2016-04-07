@@ -133,36 +133,71 @@ class Goban:
     #    return(L,L0,L1)
 
 
-black_groups = []
-white_groups = []
+black_territory = []
+white_territory = []
 
-def detect_group(goban):
-    global black_groups
-    global white_groups
+def detect_territory(goban):
+    """Detecte les territoires qui sont sur le goban
+    et leurs couleurs d'appartenance
+    Arg: goban concerne"""
+    global black_territory
+    global white_territory
 
     for i in range(goban.taille):
         for j in range(goban.taille):
-            if not is_in_group(i,j):
-                find_group(goban, i, j, [])
+            if goban.cell[i][j] == None and not is_in_territory(i,j):
+                group = find_group(goban, i, j, [])
+                print('groupe:', group)
 
-def is_in_group(i, j):
-    global black_groups
-    global white_groups
+def is_in_territory(i, j):
+    """Determine si la cellule en (i,j) est deja dans un groupe ou non"""
+    global black_territory
+    global white_territory
     
-    for line in black_groups:
-        for coord in line:
-            if (i, j) == coord:
-                return True
+    for group in black_territory:
+        if not group == None and (i, j) in group:
+            return True
 
-    for line in white_groups:
-        for coord in line:
-            if (i, j) == coord:
-                return True
+    for group in white_territory:
+        if not group == None and  (i, j) in group:
+            return True
+
     return False
 
+def get_neighbour(goban, i, j):
+    """Trouve les voisins directs d'une case
+    Arg: goban, le goban concerne
+         (i,j) les coordonnees
+    Ret: La liste des voisins """
+    ret = []
+
+    # Pas la premiere ligne
+    if not i == 0:
+        ret.append((i-1, j))
+    # Pas la première colonne
+    if not j == 0:
+        ret.append((i, j-1))
+    # Pas la derniere ligne
+    if not i == goban.taille - 1:
+        ret.append((i+1, j))
+    # Pas la première colonne
+    if not j == goban.taille - 1:
+        ret.append((i, j+1))
+
+    return ret
+
+
 def find_group(goban, i, j, group):
-
-
+    # On recupere la liste des voisins
+    voisins = get_neighbour(goban, i, j)
+    # On parcourt la liste des voisins
+    for (k, l) in voisins:
+        # Si le voisin est bien vide et n'est pas deja dans le groupe
+        if goban.cell[k][l] == None and not (k, l) in group:
+            # On l'ajoute au groupe
+            group.append((k,l))
+            find_group(goban, k, l, group)
+    return group
 
 
 if __name__ == '__main__':
