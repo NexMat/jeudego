@@ -4,23 +4,23 @@ HR_LINE = chr(9472)
 VR_LINE = chr(9474)
 INTERSE = chr(9532)
 
-def color_display(plateau):
+def color_display(goban):
     """Affiche dans le terminal le goban"""
     # Affichage des lettres des colonnes
     cprint('    ', bg = "brown", end = '')
-    for i in range(len(plateau.goban[0])):
+    for i in range(len(goban.cell[0])):
         cprint(chr(65 + i) + '  ', bg = "brown", end = '')
     print('')
 
     # Première ligne de verticaux
     cprint('    ', bg = "brown", end = '')
-    for i in plateau.goban[0]:
+    for i in goban.cell[0]:
         cprint(VR_LINE + '  ', bg = "brown", end = '')
     print('')
 
     nb_ligne = 1
     # Pour chaque ligne
-    for ligne in plateau.goban:
+    for ligne in goban.cell:
         # Affichages des numéros de ligne
         cprint(repr(nb_ligne).rjust(2), bg = "brown", end = '')
         nb_ligne += 1
@@ -51,23 +51,23 @@ def color_display(plateau):
             cprint(VR_LINE + '  ', bg = "brown", end = '')
         print('')
 
-def display_min(plateau):
+def display_min(goban):
     """Affiche dans le terminal le goban"""
     # Affichage des lettres des colonnes
     print('    ', end = '')
-    for i in range(len(plateau.goban[0])):
+    for i in range(len(goban.cell[0])):
         print(chr(65 + i) + '  ', end = '')
     print('')
 
     # Première ligne de verticaux
     print('    ', end = '')
-    for i in plateau.goban[0]:
+    for i in goban.cell[0]:
         print(VR_LINE + '  ', end = '')
     print('')
 
     nb_ligne = 1
     # Pour chaque ligne
-    for ligne in plateau.goban:
+    for ligne in goban.cell:
         # Affichages des numéros de ligne
         print(repr(nb_ligne).rjust(2), end = '')
         nb_ligne += 1
