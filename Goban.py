@@ -48,6 +48,11 @@ class Goban:
         if joueur != 0 and joueur != 1:
             return False
 
+        # On vérifie la règle du suicide
+        if self.suicide_rule(col, lgn, joueur) == True:
+            #cprint("Erreur: coup interdit (suicide) en", str(col) + ",", str(lgn) + ".", bg = "red") TODO: Expection
+            return False
+
     
         """règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
         un état idetentique à l'un de ceux qu'il lui avait était déjà donné."""
@@ -68,6 +73,7 @@ class Goban:
             if self.cell[lgn-1][col]==self.cell[lgn+1][col]==self.cell[lgn][col-1]==(joueur+1)%2 and self.cell[lgn-1][col-1]==self.cell[lgn][col-2]==self.cell[lgn+1][col-1]:
                 return False
        
+
         #4ème cas : le coup testé est à la première colonne du bogan
         elif col==0:
             if self.cell[lgn-1][col]==self.cell[lgn][col+1]==self.cell[lgn+1][col]==(joueur+1)%2 and self.cell[lgn-1][col+1]==self.cell[lgn][col+2]==self.cell[lgn+1][col+1]==joueur:
@@ -91,6 +97,46 @@ class Goban:
                 return True
 
         return True
+
+
+    def get_neighbour(self, i, j):
+        """Trouve les voisins directs d'une case
+        Arg: goban, le goban concerne
+             (i,j) les coordonnees
+        Ret: La liste des voisins """
+        ret = []
+    
+        # Pas la premiere ligne
+        if not i == 0:
+            ret.append((i-1, j))
+        # Pas la première colonne
+        if not j == 0:
+            ret.append((i, j-1))
+        # Pas la derniere ligne
+        if not i == self.taille - 1:
+            ret.append((i+1, j))
+        # Pas la première colonne
+        if not j == self.taille - 1:
+            ret.append((i, j+1))
+
+        return ret
+
+
+    def suicide_rule(self, col, lgn, joueur):
+        """Determine si la regle du suicide s'applique
+        Arg: col, lgn sont les coordonnees du coup
+             joueur est le joueur qui a effectue le coup
+        Ret: True si il y a suicide False sinon"""
+        voisins = self.get_neighbour(lgn, col)
+        for (i, j) in voisins: 
+            if self.cell[i][j] == None:
+                return False
+            if self.cell[i][j] == joueur:
+                return False
+
+        return True
+            
+
                 
     #def neighbourg(joueur,lgn,col,L,L0,L1):
     #    """ Renvoi la liste des coups joués et la liste des voisins.
@@ -146,7 +192,7 @@ def detect_territory(goban):
     black_territory = []
     white_territory = []
 
-    for i in range(goban.taille):
+    for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnees a maj
         for j in range(goban.taille):
             if goban.cell[i][j] == None and not is_in_territory(i,j):
                 group = find_group(goban, i, j, [])
@@ -176,31 +222,10 @@ def is_in_territory(i, j):
 
     return False
 
-def get_neighbour(goban, i, j):
-    """Trouve les voisins directs d'une case et la case elle-meme
-    Arg: goban, le goban concerne
-         (i,j) les coordonnees
-    Ret: La liste des voisins """
-    ret = [(i, j)]
-
-    # Pas la premiere ligne
-    if not i == 0:
-        ret.append((i-1, j))
-    # Pas la première colonne
-    if not j == 0:
-        ret.append((i, j-1)) # Pas la derniere ligne
-    if not i == goban.taille - 1:
-        ret.append((i+1, j))
-    # Pas la première colonne
-    if not j == goban.taille - 1:
-        ret.append((i, j+1))
-
-    return ret
-
 
 def find_group(goban, i, j, group):
     # On recupere la liste des voisins
-    voisins = get_neighbour(goban, i, j)
+    voisins = goban.get_neighbour(i, j) + [(i,j)]
     # On parcourt la liste des voisins
     for (k, l) in voisins:
         # Si le voisin est bien vide et n'est pas deja dans le groupe
@@ -220,7 +245,7 @@ def group_color(goban, group):
     # On parcourt les elements du groupe
     for (i, j) in group:
         # Pour chaque element, on determine les voisins
-        voisins = get_neighbour(goban, i, j)
+        voisins = goban.get_neighbour(i, j) + [(i,j)]
         # Parcours des voisins
         for (k, l) in voisins:
             if color == None:
