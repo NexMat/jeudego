@@ -5,9 +5,11 @@ last update: 03-04-2016
 """
 
 import sys
+import timeit
 from Gui import *
-from Joueur import *
 from Goban import *
+from Joueur import *
+from Exceptions import *
 from Colors import cprint
 from optparse import OptionParser;
 
@@ -60,12 +62,28 @@ def game_loop(game):
         elif ret == False:
             cprint("Erreur: entree incorrecte", fg = "red")
         else:
-            # Si le coup est possible
-            if game.goban.test_move(ret[0], ret[1], current_id) == True:
+            try:
+                (col, lgn) = ret
+                # Si le coup est possible
+                ret = game.goban.test_move(col, lgn, current_player)
+
+                # S'il y a capture
+                if not ret == False:
+                    game.goban.cell = make_capture(game.goban.cell, ret)
+
                 # On pose le pion
-                ret = game.goban.make_move(ret[0], ret[1], current_id)
-            else:
-                cprint("Erreur: coup interdit", fg = "red")
+                game.goban.make_move(col, lgn, current_id)
+
+                # On enregistre la configuration actuelle
+                game.goban.save_goban(game.goban.cell)
+
+                # On enregistre le coup du joueur
+                current_player.save_move(lgn, col)
+
+                valid = True
+
+            except Forbidden_move as e:
+                cprint("Erreur: coup interdit,", str(e), fg = "red")
                 if options.test_mode == True:
                     sys.exit(1)
                 ret = False
@@ -74,7 +92,7 @@ def game_loop(game):
         (black_territory, white_territory) = detect_territory(game.goban)
 
         # Si c'est valide
-        if ret:
+        if valid:
             # On passe au tour suivant
             game.tour += 1
 
@@ -85,14 +103,14 @@ def parse_coord(coord):
         return True
 
     # Mauvaises entrées
-    if len(coord) != 2:
+    if len(coord) != 2 and len(coord) != 3:
         return False
 
     # On transforme la lettre de la colonne en nombre pour le tableau
     col = ord(coord[0]) - 65
 
     # On adapte le numéro de ligne à l'utilisation du tableau
-    lgn = int(coord[1]) - 1
+    lgn = int(coord[1:]) - 1
 
     return col, lgn
 

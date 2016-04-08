@@ -14,13 +14,15 @@ class Joueur:
             isHuman : bool définit si le joueur est humain ou non
             clock   : float, temps de jeu courant du joueur
             score   : int, score du joueur
-            number  : int, numero du joueur : 0 ou 1
+            number  : int, numero du joueur (0 ou 1)
+            moves   : array de couples désigne les coups du joueur (lgn, col)
         """
         self.isHuman = isHuman
         self.number  = number
         self.clock   = 0
         self.score   = score
         self.game    = game
+        self.moves   = []
         
         
     def begin_tour(self):
@@ -72,4 +74,10 @@ class Joueur:
             print("Au tour de l'IA")
 
         return coord
+
+    def save_move(self, lgn, col):
+        """Sauvegarde les coups du joueur
+        Tableau de couple (ligne, colonne)
+        """
+        self.moves.append((lgn, col))
 
