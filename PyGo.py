@@ -32,6 +32,8 @@ def game_loop(game):
     global options
 
     while True:
+        valid = False
+
         # Si c'est le tour du joueur 1
         if game.tour % 2 == 0:
             current_id     = 0
@@ -67,7 +69,7 @@ def game_loop(game):
                 # Si le coup est possible
                 ret = game.goban.test_move(col, lgn, current_player)
 
-                # S'il y a capture
+                # S'il y a capture TODO: erreur car quand même execute apres exception
                 if not ret == False:
                     game.goban.cell = make_capture(game.goban.cell, ret)
 
@@ -84,15 +86,15 @@ def game_loop(game):
 
             except Forbidden_move as e:
                 cprint("Erreur: coup interdit,", str(e), fg = "red")
+                valid = False
                 if options.test_mode == True:
                     sys.exit(1)
-                ret = False
 
         # Detection des territoires TODO: Affichage
         (black_territory, white_territory) = detect_territory(game.goban)
 
         # Si c'est valide
-        if valid:
+        if valid == True:
             # On passe au tour suivant
             game.tour += 1
 

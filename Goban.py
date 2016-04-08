@@ -62,7 +62,9 @@ class Goban:
         voisins = self.get_neighbour(lgn, col)
 
         # On met le coup en place pour calculer les libertés
-        new_goban = self.cell
+        new_goban = []
+        for old_lines in self.cell:
+            new_goban.append(list(old_lines))
         new_goban[lgn][col] = joueur.number
         
         # Parmi les voisins
@@ -80,7 +82,7 @@ class Goban:
         new_goban = make_capture(new_goban, captured_group)
 
         # On vérifie la règle du Ko TODO: tester Attention aux tests entre goban (capture)
-        if len(joueur.moves) > 1 and joueur.moves[-1] == (lgn, col) and new_goban == self.last_gobans[-2]:
+        if len(joueur.moves) > 1 and joueur.moves[-1] == (lgn, col) and self.is_same_state(new_goban) == True:
             raise Forbidden_move(lgn, col, "Ko")
 
         # On vérifie la règle du suicide TODO: tester
@@ -91,6 +93,14 @@ class Goban:
             return captured_group
         else:
             return False
+
+
+    def is_same_state(self, new_goban):
+        for i in range(self.taille):
+            for j in range(self.taille):
+                if self.last_gobans[-2][i][j] != new_goban[i][j]:
+                    return False
+        return True
 
     
         #"""règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
