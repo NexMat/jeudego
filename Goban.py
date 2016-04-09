@@ -82,7 +82,7 @@ class Goban:
         new_goban = make_capture(new_goban, captured_group)
 
         # On vérifie la règle du Ko TODO: tester Attention aux tests entre goban (capture)
-        if len(joueur.moves) > 1 and joueur.moves[-1] == (lgn, col) and self.is_same_state(new_goban) == True:
+        if len(joueur.moves) > 1 and joueur.moves[-1] == (lgn, col) and self.was_same_state(new_goban) == True:
             raise Forbidden_move(lgn, col, "Ko")
 
         # On vérifie la règle du suicide TODO: tester
@@ -95,7 +95,9 @@ class Goban:
             return False
 
 
-    def is_same_state(self, new_goban):
+    def was_same_state(self, new_goban):
+        print("o", self.last_gobans)
+        print("n", new_goban)
         for i in range(self.taille):
             for j in range(self.taille):
                 if self.last_gobans[-2][i][j] != new_goban[i][j]:
@@ -284,8 +286,8 @@ def detect_territory(goban):
                 elif group_color(goban, group) == 1:
                     white_territory.append(group)
     
-    print("\n\n\nBlack:", black_territory) #TODO Affichage
-    print("White:", white_territory)
+    #print("\n\n\nBlack:", black_territory) #TODO Affichage
+    #print("White:", white_territory)
 
     return black_territory, white_territory
 

@@ -77,7 +77,10 @@ def game_loop(game):
                 game.goban.make_move(col, lgn, current_id)
 
                 # On enregistre la configuration actuelle
-                game.goban.save_goban(game.goban.cell)
+                tmp_goban = []
+                for old_lines in game.goban.cell:
+                    tmp_goban.append(list(old_lines))
+                game.goban.save_goban(tmp_goban)
 
                 # On enregistre le coup du joueur
                 current_player.save_move(lgn, col)
