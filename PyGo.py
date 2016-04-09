@@ -93,7 +93,7 @@ def game_loop(game):
                 if options.test_mode == True:
                     sys.exit(1)
 
-        # Detection des territoires TODO: Affichage & optimisation
+        # Detection des territoires
         (black_territory, white_territory) = detect_territory(game.goban)
 
         # Si c'est valide

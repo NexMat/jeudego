@@ -98,15 +98,6 @@ class Goban:
         else:
             return False
 
-
-    def was_same_state(self, new_goban):
-        for i in range(self.taille):
-            for j in range(self.taille):
-                if self.last_gobans[-2][i][j] != new_goban[i][j]:
-                    return False
-        return True
-
-    
         #"""règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
         #un état idetentique à l'un de ceux qu'il lui avait était déjà donné."""
         #
@@ -152,6 +143,14 @@ class Goban:
         #return True
 
 
+    def was_same_state(self, new_goban):
+        for i in range(self.taille):
+            for j in range(self.taille):
+                if self.last_gobans[-2][i][j] != new_goban[i][j]:
+                    return False
+        return True
+
+    
     def get_neighbour(self, i, j):
         """Trouve les voisins directs d'une case
         Arg: goban, le goban concerne
@@ -288,8 +287,8 @@ def detect_territory(goban):
                 elif group_color(goban, group) == 1:
                     white_territory.append(group)
     
-    #print("\n\n\nBlack:", black_territory) #TODO Affichage
-    #print("White:", white_territory)
+    print("\n\n\nBlack:", black_territory) #TODO Affichage
+    print("White:", white_territory)
 
     return black_territory, white_territory
 
