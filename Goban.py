@@ -81,11 +81,11 @@ class Goban:
 
         new_goban = make_capture(new_goban, captured_group)
 
-        # On vérifie la règle du Ko TODO: tester Attention aux tests entre goban (capture)
-        if len(joueur.moves) > 1 and joueur.moves[-1] == (lgn, col) and self.was_same_state(new_goban) == True:
+        # On vérifie la règle du Ko
+        if len(self.last_gobans) > 1 and self.was_same_state(new_goban) == True:
             raise Forbidden_move(lgn, col, "Ko")
 
-        # On vérifie la règle du suicide TODO: tester
+        # On vérifie la règle du suicide
         if self.suicide_rule(col, lgn, joueur.number) == True and not capture == True:
             raise Forbidden_move(lgn, col, "suicide")
 
@@ -96,8 +96,6 @@ class Goban:
 
 
     def was_same_state(self, new_goban):
-        print("o", self.last_gobans)
-        print("n", new_goban)
         for i in range(self.taille):
             for j in range(self.taille):
                 if self.last_gobans[-2][i][j] != new_goban[i][j]:

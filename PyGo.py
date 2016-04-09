@@ -69,7 +69,7 @@ def game_loop(game):
                 # Si le coup est possible
                 ret = game.goban.test_move(col, lgn, current_player)
 
-                # S'il y a capture TODO: erreur car quand même execute apres exception
+                # S'il y a capture
                 if not ret == False:
                     game.goban.cell = make_capture(game.goban.cell, ret)
 
