@@ -58,6 +58,10 @@ class Goban:
         if joueur.number != 0 and joueur.number != 1:
             raise Forbidden_move(lgn, col, "coup d'un non-joueur")
 
+        # On vérifie que l'emplacement est bien vide
+        if self.cell[lgn][col] != None:
+            raise Forbidden_move(lgn, col, "intersection déjà prise")
+
         # On vérifie si il y a capture
         voisins = self.get_neighbour(lgn, col)
 
