@@ -5,6 +5,15 @@ last update: 16-03-2016
 """
 
 import time
+import sys
+import timeit
+import random
+from Gui import *
+from Goban import *
+from Exceptions import *
+from Colors import cprint
+from optparse import OptionParser;
+from IA_random import *
 
 class Joueur:
     """ Modélise les caractéristiques du joueur """
@@ -72,7 +81,10 @@ class Joueur:
             coord = input(" ")
         else : 
             print("Au tour de l'IA")
-
+            if self.IA_random.niveau == 0:
+                coord = IA_random.play_turn(self)
+            else:
+                print("Niveau pas encore défini")
         return coord
 
     def save_move(self, lgn, col):
