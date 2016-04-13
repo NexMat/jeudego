@@ -14,6 +14,8 @@ from Exceptions import *
 from Colors import cprint
 from optparse import OptionParser;
 from IA_random import *
+from Quality import *
+from IA_level1 import *
 
 class Joueur:
     """ Modélise les caractéristiques du joueur """
@@ -81,10 +83,15 @@ class Joueur:
             coord = input(" ")
         else : 
             print("Au tour de l'IA")
+            # ne voit pas comment faire pour l'instant
+            """
             if self.IA_random.niveau == 0:
                 coord = IA_random.play_turn(self)
+            elif self.IA_level1.niveau ==1:
+                coord = find_coup(self)           
             else:
                 print("Niveau pas encore défini")
+            """
         return coord
 
     def save_move(self, lgn, col):
