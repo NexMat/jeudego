@@ -11,4 +11,9 @@ class Forbidden_move(Exception):
         self.msg = msg
 
     def __str__(self):
-        return self.msg + " en (" + str(self.lgn) + ", " + str(self.col) +")"
+        self.translate_coord()
+        return self.msg + " en " + self.col + str(self.lgn) + "."
+
+    def translate_coord(self):
+        self.lgn += 1
+        self.col = chr(self.col + 65)

@@ -71,7 +71,7 @@ def game_loop(game):
 
                 # S'il y a capture
                 if not ret == False:
-                    game.goban.cell = make_capture(game.goban.cell, ret)
+                    game.goban.cell = make_capture(game.goban.cell, ret) #TODO comptabiliser les captures
 
                 # On pose le pion
                 game.goban.make_move(col, lgn, current_id)

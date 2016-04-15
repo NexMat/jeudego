@@ -83,6 +83,7 @@ class Goban:
                     capture = True
                     captured_group.append(group)
 
+        # On fait le coup pour tester
         new_goban = make_capture(new_goban, captured_group)
 
         # On vérifie la règle du Ko
@@ -144,6 +145,9 @@ class Goban:
 
 
     def was_same_state(self, new_goban):
+        """Compare le goban courant avec le goban en paramètre
+        Arg: new_goban (tableau) le nouveau goban à comparer
+        Ret: True si les deux gobans ont le même état, False sinon"""
         for i in range(self.taille):
             for j in range(self.taille):
                 if self.last_gobans[-2][i][j] != new_goban[i][j]:
@@ -153,18 +157,18 @@ class Goban:
     
     def get_neighbour(self, i, j):
         """Trouve les voisins directs d'une case
-        Arg: goban, le goban concerne
-             (i,j) les coordonnees
+        Arg: goban, le goban concerné
+             (i,j) les coordonnées
         Ret: La liste des voisins """
         ret = []
     
-        # Pas la premiere ligne
+        # Pas la première ligne
         if not i == 0:
             ret.append((i-1, j))
         # Pas la première colonne
         if not j == 0:
             ret.append((i, j-1))
-        # Pas la derniere ligne
+        # Pas la dernière ligne
         if not i == self.taille - 1:
             ret.append((i+1, j))
         # Pas la première colonne
@@ -175,9 +179,9 @@ class Goban:
 
 
     def suicide_rule(self, col, lgn, joueur):
-        """Determine si la regle du suicide s'applique
-        Arg: col, lgn sont les coordonnees du coup
-             joueur est le joueur qui a effectue le coup
+        """Détermine si la règle du suicide s'applique
+        Arg: col, lgn sont les coordonnées du coup
+             joueur est le joueur qui a effectué le coup
         Ret: True si il y a suicide False sinon"""
         voisins = self.get_neighbour(lgn, col)
         for (i, j) in voisins: 
@@ -192,7 +196,7 @@ class Goban:
         self.last_gobans.append(cells)
 
     def find_group(self, i, j, group, color):
-        """Trouve le groupe de pierre auquel la pierre entrée est rattaché
+        """Trouve le groupe de pierre auquel la pierre entrée est rattachée
         Fonction récursive
         Arg: color la couleur du groupe (peut être None, ie vide)
         """
@@ -259,6 +263,8 @@ class Goban:
     #    return(L,L0,L1)
 
 def make_capture(goban, groups):
+    """Fait les captures d'un (ou plusieurs) groupes de pierre
+    Arg: groups, les groupes à capturer"""
     for group in groups:
         for (i, j) in group:
             goban[i][j] = None
@@ -268,16 +274,16 @@ black_territory = []
 white_territory = []
 
 def detect_territory(goban):
-    """Detecte les territoires qui sont sur le goban
+    """Détecte les territoires qui sont sur le goban
     et leurs couleurs d'appartenance
-    Arg: goban concerne"""
+    Arg: goban concerné"""
     global black_territory
     global white_territory
 
     black_territory = []
     white_territory = []
 
-    for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnees a maj
+    for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnées à màj
         for j in range(goban.taille):
             if goban.cell[i][j] == None and not is_in_territory(i,j):
                 group = goban.find_group(i, j, [], None)
@@ -293,7 +299,7 @@ def detect_territory(goban):
     return black_territory, white_territory
 
 def is_in_territory(i, j):
-    """Determine si la cellule en (i,j) est deja dans un groupe ou non"""
+    """Détermine si la cellule en (i,j) est déjà dans un groupe ou non"""
     global black_territory
     global white_territory
     
@@ -309,15 +315,15 @@ def is_in_territory(i, j):
 
 
 def group_color(goban, group):
-    """Determine la couleur d'appartenance d'un groupe
-    Arg: goban, le goban concerne
-         group, le group dont la couleur est a determiner
+    """Détermine la couleur d'appartenance d'un groupe
+    Arg: goban, le goban concerné
+         group, le groupe dont la couleur est à determiner
     Ret: la couleur, 0 pour noir, 1 pour blanc, 2 pour aucun"""
     color = None
     
-    # On parcourt les elements du groupe
+    # On parcourt les éléments du groupe
     for (i, j) in group:
-        # Pour chaque element, on determine les voisins
+        # Pour chaque élément, on détermine les voisins
         voisins = goban.get_neighbour(i, j) + [(i,j)]
         # Parcours des voisins
         for (k, l) in voisins:
