@@ -28,12 +28,13 @@ class Joueur:
             number  : int, numero du joueur (0 ou 1)
             moves   : array de couples désigne les coups du joueur (lgn, col)
         """
-        self.isHuman = isHuman
-        self.number  = number
-        self.clock   = 0
-        self.score   = score
-        self.game    = game
-        self.moves   = []
+        self.isHuman  = isHuman
+        self.number   = number
+        self.clock    = 0
+        self.score    = score
+        self.game     = game
+        self.moves    = []
+        self.captures = 0
         
         
     def begin_tour(self):
@@ -72,7 +73,7 @@ class Joueur:
             for j in range(self.game.goban.taille):
                 if self.number == self.game.goban.cell[i][j]:
                     value += 1
-        self.score = value
+        self.score = value + self.capture
     
     def choose_move(self):
         """

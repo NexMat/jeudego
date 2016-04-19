@@ -17,7 +17,7 @@ from optparse import OptionParser;
 class IA_random:
     """ Modélise les caractéristiques du joueur IA random """
 
-    def __init__(self, number, game, isHuman = False,score = 0, niveau = 0):
+    def __init__(self, number, game, isHuman = False, score = 0, niveau = 0):
         """
         Constructeur : Definit les caracteristiques du joueur IA
         isHuman : bool définit si le joueur est humain ou non
@@ -57,20 +57,3 @@ class IA_random:
                 break
             return coord
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    

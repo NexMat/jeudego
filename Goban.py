@@ -99,50 +99,6 @@ class Goban:
         else:
             return False
 
-        #"""règle du ko: Un joeur en posant un pierre, ne doit pas redonner au goban
-        #un état idetentique à l'un de ceux qu'il lui avait était déjà donné."""
-        #
-        ## Cas d'un possible ko sur les bords du bogan
-        #
-        ##1er cas: le coup testé est à la dernière ligne du bogan
-        #if lgn==self.taille:
-        #    if self.cell[lgn][col+1]==self.cell[lgn][col-1]==self.cell[lgn-1][col]==(joueur+1)%2 and self.cell[lgn-2][col]==self.cell[lgn-1][col-1]==self.cell[lgn-1][col+1]==joueur:
-        #        return False
-        ##2ème cas : le coup testé est à la première ligne du bogan
-        #elif lgn==0:
-        #    if self.cell[lgn][col-1]==self.cell[lgn][col+1]==self.cell[lgn+1][col]==(joueur+1)%2 and self.cell[lgn+1][col-1]==self.cell[lgn+1][col+1]==self.cell[lgn+2][col]==joueur:
-        #        return False
-        #
-        ##3ème cas : le coup testé est à la dernière colonne du bogan
-        #elif col==self.taille:
-        #    if self.cell[lgn-1][col]==self.cell[lgn+1][col]==self.cell[lgn][col-1]==(joueur+1)%2 and self.cell[lgn-1][col-1]==self.cell[lgn][col-2]==self.cell[lgn+1][col-1]:
-        #        return False
-       
-
-        ##4ème cas : le coup testé est à la première colonne du bogan
-        #elif col==0:
-        #    if self.cell[lgn-1][col]==self.cell[lgn][col+1]==self.cell[lgn+1][col]==(joueur+1)%2 and self.cell[lgn-1][col+1]==self.cell[lgn][col+2]==self.cell[lgn+1][col+1]==joueur:
-        #        return False
-        #
-        ##""" Cas d'un possible ko dans le bogan"""    
-        #
-        #else:
-        #    if self.cell[lgn+1][col]==self.cell[lgn-1][col]==self.cell[lgn][col-1]==self.cell[lgn][col+1]==(joueur+1)%2:
-        #        if self.cell[lgn][col-2]==self.cell[lgn+1][col-1]==self.cell[lgn-1][col-1]==joueur:
-        #            return False
-        #        elif self.cell[lgn-1][col-1]==self.cell[lgn-2][col]==self.cell[lgn-1][col+1]==joueur:
-        #            return False
-        #        elif self.cell[lgn-1][col+1]==self.cell[lgn][col+2]==self.cell[lgn+1][col+1]==joueur:
-        #            return False
-        #        elif self.cell[lgn+1][col+1]==self.cell[lgn+2][col]==self.cell[lgn+1][col-1]==joueur:
-        #            return False
-        #        else:
-        #            return True
-        #    else:
-        #        return True
-
-        #return True
-
 
     def was_same_state(self, new_goban):
         """Compare le goban courant avec le goban en paramètre
@@ -221,46 +177,6 @@ class Goban:
                     return True
         return False
 
-
-    #def neighbourg(joueur,lgn,col,L,L0,L1):
-    #    """ Renvoi la liste des coups joués et la liste des voisins.
-    #        L : liste des coups joués (joueur,ligne,colonne,indice)
-    #        L0 : liste des voisins pour le joueur 0 (indice,[ligne,colonne],...)
-    #        L1: liste des voisins pour le joueur 1
-    #    """
-    #    number_neighbourg=[]
-    #    for i in range(len(L)):
-    #        if joueur==L[i][0]:
-    #            if ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col+1 or L[i][2]==col-1))
-    #            or ((L[i][1]==lgn+1 or L[i][1]==lgn-1) and (L[i][2]==col))
-    #            or ((L[i][1]==lgn) and (L[i][2]==col+1 or L[i][2]==col-1)):
-    #                indice=L[i][3]
-    #                if joueur==0:
-    #                    L0[indice]+=[L[i][1],L[i][2]]
-    #                    L+=[joueur,L[i][1],L[i][2],indice]
-    #                    for k in range (len(number_neighbourg)):
-    #                        if number_neighbourg[k]!=indice:
-    #                            number_neighbourg+=[indice]
-    #                if joueur==1:
-    #                    L1[indice]+=[L[i][1],L[i][2]]
-    #                    L+=[joueur,L[i][1],L[i][2],indice]
-    #                    for k in range (len(number_neighbourg)):
-    #                        if number_neighbourg[k]!=indice:
-    #                            number_neighbourg+=[indice]
-    #    if len(number_neighbourg)>1:
-    #        if joueur==0:
-    #            for i in range (len(number_neighbourg)):
-    #                L0[number_neighbourg[0]]+=L0[number_neighbourg[i][1:]
-    #                L0.remove(L0[number_neighbourg[i]])  # remove ne marche pas avec des matrices ?
-    #            for i in range (len(L0)):
-    #                L0[i][0]=i
-    #        if joueur:        
-    #            for i in range (len(number_neighbourg)):
-    #                L1[number_neighbourg[0]]+=L1[number_neighbourg[i][1:]
-    #                L1.remove(L1[number_neighbourg[i])
-    #            for i in range (len(L1)):
-    #                L1[i][0]=i
-    #    return(L,L0,L1)
 
 def make_capture(goban, groups):
     """Fait les captures d'un (ou plusieurs) groupes de pierre
