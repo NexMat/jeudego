@@ -73,7 +73,7 @@ class Joueur:
             for j in range(self.game.goban.taille):
                 if self.number == self.game.goban.cell[i][j]:
                     value += 1
-        self.score = value + self.capture
+        self.score = value + self.captures
     
     def choose_move(self):
         """

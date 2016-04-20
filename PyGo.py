@@ -71,7 +71,7 @@ def game_loop(game):
 
                 # S'il y a capture
                 if not ret == False:
-                    game.goban.cell = make_capture(game.goban.cell, ret) #TODO comptabiliser les captures
+                    game.goban.cell = make_capture(game.goban.cell, ret)
                     for group in ret:
                         current_player.captures += len(group)
 
