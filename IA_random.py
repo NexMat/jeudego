@@ -31,24 +31,23 @@ class IA_random(Joueur):
 
     def choose_move(self):
         """
-        Determine le mouvement de l'IA de manière récursive jusqu'à
+        Determine le mouvement de l'IA jusqu'à
         obtenir un coup possible
         
-        return: les coordonnées entrées
+        return: les coordonnées entrées (col, lgn)
         """
         coord = None
         for i in range(100):                #on teste aléatoirement 100 fois 
             col = random.randint(0, self.game.goban.taille - 1)
             lgn = random.randint(0, self.game.goban.taille - 1)
             try: 
-                if not self.game.goban.test_move(col, lgn, self) == False:
+                if self.game.goban.test_move(col, lgn, self) == False:
                     coord = (col, lgn)
-                    print("coucou1", coord)
                     sys.stdout.flush()
                     return coord
-            except:
+            except Forbidden_move as e:
                 pass
-        
+
         #for col in range(self.game.goban.taille):
         #    for lgn in range(self.game.goban.taille):
         #        try: 
