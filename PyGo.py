@@ -11,7 +11,8 @@ from Goban import *
 from Joueur import *
 from Exceptions import *
 from Colors import cprint
-from optparse import OptionParser;
+from IA_random import IA_random
+from optparse import OptionParser
 
 args    = None
 options = None
@@ -57,7 +58,11 @@ def game_loop(game):
         coord = current_player.choose_move()
 
         # On parse l'entrée
-        ret = parse_coord(coord)
+        if current_player.isHuman == True:
+            ret = parse_coord(coord)
+        else:
+            ret = coord
+
         if ret == True:
             print()
             sys.exit(0)
@@ -168,7 +173,8 @@ if __name__ == '__main__':
 
     # Création des joueurs
     p1 = Joueur(0, game) # Joueur noir
-    p2 = Joueur(1, game) # Joueur blanc
+    #p2 = Joueur(1, game) # Joueur blanc
+    p2 = IA_random(1, game, False, 0)
     game.player1 = p1
     game.player2 = p2
 
