@@ -32,6 +32,7 @@ class Joueur:
         self.number   = number
         self.clock    = 0
         self.score    = score
+        self.komi     = score
         self.game     = game
         self.moves    = []
         self.captures = 0
@@ -74,6 +75,7 @@ class Joueur:
                 if self.number == self.game.goban.cell[i][j]:
                     value += 1
         self.score = value + self.captures
+        self.score += self.komi
     
     def choose_move(self):
         """

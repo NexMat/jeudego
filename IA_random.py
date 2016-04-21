@@ -36,7 +36,7 @@ class IA_random(Joueur):
         
         return: les coordonnées entrées (col, lgn)
         """
-        coord = None
+        coord = "pass"
         for i in range(100):                #on teste aléatoirement 100 fois 
             col = random.randint(0, self.game.goban.taille - 1)
             lgn = random.randint(0, self.game.goban.taille - 1)
@@ -48,13 +48,14 @@ class IA_random(Joueur):
             except Forbidden_move as e:
                 pass
 
-        #for col in range(self.game.goban.taille):
-        #    for lgn in range(self.game.goban.taille):
-        #        try: 
-        #            if not self.game.goban.test_move(col, lgn, self) == False:
-        #                coord = (col, lgn)
-        #                print("coucou2", coord)
-        #                return coord
-        #        except:
-        #            pass
+        for col in range(self.game.goban.taille):
+            for lgn in range(self.game.goban.taille):
+                try: 
+                    if not self.game.goban.test_move(col, lgn, self) == False:
+                        coord = (col, lgn)
+                        return coord
+                except:
+                    pass
+
+        return coord
 

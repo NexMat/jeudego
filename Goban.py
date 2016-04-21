@@ -212,15 +212,20 @@ def detect_territory(goban):
     black_territory = []
     white_territory = []
 
-    for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnées à màj
-        for j in range(goban.taille):
-            if goban.cell[i][j] == None and not is_in_territory(i,j):
-                group = goban.find_group(i, j, [], None)
-                if group_color(goban, group) == 0:
-                    black_territory.append(group)
+    coord = [(i, j) for i in range(goban.taille) for j in range(goban.taille)]
 
-                elif group_color(goban, group) == 1:
-                    white_territory.append(group)
+    #for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnées à màj
+    #    for j in range(goban.taille):
+    for (i, j) in coord:
+       if goban.cell[i][j] == None and not is_in_territory(i,j):
+           group = goban.find_group(i, j, [], None)
+           if group_color(goban, group) == 0:
+               black_territory.append(group)
+               coord = [i for i in coord if not i in group]
+
+           elif group_color(goban, group) == 1:
+               white_territory.append(group)
+               coord = [i for i in coord if not i in group]
     
     print("\n\n\nBlack:", black_territory) #TODO Affichage
     print("White:", white_territory)
@@ -243,7 +248,7 @@ def is_in_territory(i, j):
     return False
 
 
-def group_color(goban, group):
+def group_color(goban, group): #TODO ptet un bug
     """Détermine la couleur d'appartenance d'un groupe
     Arg: goban, le goban concerné
          group, le groupe dont la couleur est à determiner

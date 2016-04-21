@@ -32,6 +32,8 @@ def game_loop(game):
     global args
     global options
 
+    player_passed = False
+
     while True:
         valid = False
 
@@ -63,11 +65,23 @@ def game_loop(game):
         else:
             ret = coord
 
+        # S'il faut quitter
         if ret == True:
             print()
             sys.exit(0)
+        # Si l'entree est incorrecte
         elif ret == False:
             cprint("Erreur: entree incorrecte", fg = "red")
+        # Si le joueur passe
+        elif ret == "pass":
+            # Si le joueur précédent a passé
+            if player_passed == True:
+                #TODO Affichage de fin de partie
+                print()
+                sys.exit(0)
+            else:
+                player_passed = True
+                valid = True
         else:
             try:
                 (col, lgn) = ret
@@ -113,6 +127,10 @@ def parse_coord(coord):
     # Pour quitter
     if coord == 'q' or coord == 'quit':
         return True
+
+    # Pour passer
+    if coord == "pass":
+        return "pass"
 
     # Mauvaises entrées
     if len(coord) != 2 and len(coord) != 3:
@@ -164,17 +182,34 @@ def read_opt():
         dest = "minim",
         help = "Minimalist display (default False). With minimalist display, colors are not used",
         default = "False")
+    # Parsing komi
+    parser.add_option("-k", "--komi",
+        action = "store",
+        type = "float",
+        dest = "komi",
+        help = "Determines the value of the komi",
+        default = "0")
     options, args = parser.parse_args(sys.argv)
 
 if __name__ == '__main__':
-    read_opt();
+    read_opt()
     # Création d'une nouvelle partie
     game = PyGo(options.size)
 
     # Création des joueurs
-    p1 = Joueur(0, game) # Joueur noir
-    #p2 = Joueur(1, game) # Joueur blanc
-    p2 = IA_random(1, game, False, 0)
+    p1 = None
+    p2 = None
+    # Joueur noir
+    if options.player1 == 'ai':
+        p1 = IA_random(0, game)
+    else:
+        p1 = Joueur(0, game)
+    # Joueur blanc
+    if options.player2 == 'ai':
+        p2 = IA_random(1, game, score = options.komi)
+    else:
+        p2 = Joueur(1, game, score = options.komi)
+
     game.player1 = p1
     game.player2 = p2
 
