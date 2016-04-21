@@ -178,6 +178,19 @@ class Goban:
         return False
 
 
+    def return_liberty(self, goban, group):
+        """
+        Trouve les libertés d'un groupe et les renvoie sous forme d'une liste
+        Arg: goban, le plateau hypothétique
+        """
+        list_liberty
+        for (i, j) in group:
+            voisins = self.get_neighbour(i, j) + [(i, j)]
+            for (k, l) in voisins:
+                if goban[k][l] == None:
+                    list_liberty.append((k,l))
+        return list_liberty
+
 def make_capture(goban, groups):
     """Fait les captures d'un (ou plusieurs) groupes de pierre
     Arg: groups, les groupes à capturer"""
