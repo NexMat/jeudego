@@ -6,8 +6,7 @@ last update: 03-04-2016
 
 import sys
 from Exceptions import *
-from Colors import cprint
-
+from Colors import cprint 
 class Goban:
     """Modélise un plateau de jeu de Go, le goban."""
 
@@ -202,35 +201,80 @@ def make_capture(goban, groups):
 black_territory = []
 white_territory = []
 
+#def detect_territory(goban):
+#    """Détecte les territoires qui sont sur le goban
+#    et leurs couleurs d'appartenance
+#    Arg: goban concerné"""
+#    global black_territory
+#    global white_territory
+#
+#    black_territory = []
+#    white_territory = []
+#
+#    coord = [(i, j) for i in range(goban.taille) for j in range(goban.taille)]
+#
+#    #for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnées à màj
+#    #    for j in range(goban.taille):
+#    for (i, j) in coord:
+#       if goban.cell[i][j] == None and not is_in_territory(i,j):
+#           group = goban.find_group(i, j, [], None)
+#           if group_color(goban, group) == 0:
+#               black_territory.append(group)
+#               coord = [i for i in coord if not i in group]
+#
+#           elif group_color(goban, group) == 1:
+#               white_territory.append(group)
+#               coord = [i for i in coord if not i in group]
+#    
+#    print("\n\n\nBlack:", black_territory) #TODO Affichage
+#    print("White:", white_territory)
+#
+#    return black_territory, white_territory
+
 def detect_territory(goban):
-    """Détecte les territoires qui sont sur le goban
-    et leurs couleurs d'appartenance
-    Arg: goban concerné"""
-    global black_territory
-    global white_territory
+
+    # On récupère toutes les cases vides
+    coord_none = [(i, j) for i in range(goban.taille) for j in range(goban.taille) if goban.cell[i][j] == None]
 
     black_territory = []
     white_territory = []
 
-    coord = [(i, j) for i in range(goban.taille) for j in range(goban.taille)]
+    # Parmi toutes ces cases vides
+    for (i, j) in coord_none:
 
-    #for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnées à màj
-    #    for j in range(goban.taille):
-    for (i, j) in coord:
-       if goban.cell[i][j] == None and not is_in_territory(i,j):
-           group = goban.find_group(i, j, [], None)
-           if group_color(goban, group) == 0:
-               black_territory.append(group)
-               coord = [i for i in coord if not i in group]
+        # On récupère les voisins non vides
+        voisins = goban.get_neighbour(i, j)
+        voisins = [(k, l) for (k, l) in voisins if goban.cell[k][l] != None]
 
-           elif group_color(goban, group) == 1:
-               white_territory.append(group)
-               coord = [i for i in coord if not i in group]
-    
+        # Si tous les voisins sont vides, on passe à la case suivante
+        if voisins == []:
+            continue
+
+        # S'ils sont tous noirs
+        if find_color(goban, voisins) == 0:
+            black_territory.append((i,j))
+
+        # S'ils sont tous blancs
+        elif find_color(goban, voisins) == 1:
+            white_territory.append((i,j))
+
     print("\n\n\nBlack:", black_territory) #TODO Affichage
     print("White:", white_territory)
-
+                
     return black_territory, white_territory
+
+def find_color(goban, coords):
+    """Determine la couleur des cases entrees en parametre
+    Arg: coords, liste de coordonnees (i, j), ne peut pas désigner une case vide
+    Ret: 0 pour noir, 1 pour blanc, 2 pour aucun
+    """
+
+    color = goban.cell[coords[0][0]][coords[0][1]]
+
+    for (i, j) in coords:
+        if goban.cell[i][j] != color:
+            return 2
+    return color
 
 def is_in_territory(i, j):
     """Détermine si la cellule en (i,j) est déjà dans un groupe ou non"""
