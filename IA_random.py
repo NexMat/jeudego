@@ -8,7 +8,6 @@ import sys
 import timeit
 import random
 from Joueur import Joueur
-#from Gui import *
 from Goban import *
 from Exceptions import *
 from Colors import cprint

@@ -11,15 +11,12 @@ last update: 13-04-2016
 import sys
 import timeit
 import random
-# from Gui import *
+from Joueur import Joueur
 from Goban import *
-from Joueur import *
 from Exceptions import *
-from Quality import *
-from Colors import cprint
-from optparse import OptionParser;
+from Quality import Quality
 
-class IA_level1:
+class IA_level1(Joueur):
     """ Modélise les caractéristiques du joueur IA level1 """
 
     def __init__(self, number, game, isHuman = False,score = 0):
@@ -43,8 +40,8 @@ class IA_level1:
         """
         coord = "pass"
         col, lgn = 0, 0
-        for i in range(self.goban.taille):
-            for j in range(self.goban.taille):
+        for i in range(self.game.goban.taille):
+            for j in range(self.game.goban.taille):
                 if self.quality.importance(self,i,j)> self.quality.importance(self,col,lgn):
                     i,j = col, lgn
         coord = col, lgn   
