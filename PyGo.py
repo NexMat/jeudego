@@ -12,6 +12,7 @@ from Joueur import *
 from Exceptions import *
 from Colors import cprint
 from IA_random import IA_random
+from IA_level1 import IA_level1
 from optparse import OptionParser
 
 args    = None
@@ -205,8 +206,10 @@ if __name__ == '__main__':
     else:
         p1 = Joueur(0, game)
     # Joueur blanc
-    if options.player2 == 'ai':
+    if options.player2 == 'ai0':
         p2 = IA_random(1, game, score = options.komi)
+    elif options.player2 == 'ai1':
+        p2 = IA_level1(1, game, score = options.komi)
     else:
         p2 = Joueur(1, game, score = options.komi)
 

@@ -11,7 +11,7 @@ last update: 13-04-2016
 import sys
 import timeit
 import random
-from Gui import *
+# from Gui import *
 from Goban import *
 from Joueur import *
 from Exceptions import *
@@ -22,7 +22,7 @@ from optparse import OptionParser;
 class IA_level1:
     """ Modélise les caractéristiques du joueur IA level1 """
 
-    def __init__(self, number, game, isHuman = False,score = 0, niveau = 1):
+    def __init__(self, number, game, isHuman = False,score = 0):
         """
         Constructeur : Definit les caracteristiques du joueur IA
         isHuman : bool définit si le joueur est humain ou non
@@ -31,15 +31,9 @@ class IA_level1:
         number  : int, numero du joueur IA (0 ou 1)
         moves   : array de couples désigne les coups du joueur (lgn, col)
         """
-        self.isHuman = isHuman
-        self.number  = number
-        self.clock   = 0
-        self.score   = score
-        self.game    = game
-        self.moves   = []
-        self.niveau = niveau
+        super().__init__(number, game, isHuman = False, score = score)
 
-    def find_coup(self):
+    def choose_move(self):
         """
         Détermine la qualité du coup proposé selon les critères suivants:
         -> le coup est t'il jouable ?
@@ -47,6 +41,7 @@ class IA_level1:
         -> si oui, combien de cases ?
         -> suicide ? etc ..
         """
+        coord = "pass"
         col, lgn = 0, 0
         for i in range(self.goban.taille):
             for j in range(self.goban.taille):
