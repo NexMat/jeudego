@@ -7,17 +7,14 @@ last update: 21-04-2016
 import sys
 import timeit
 import random
-# from Gui import *
 from Goban import *
 from Joueur import *
 from Exceptions import *
-from Colors import cprint
-from optparse import OptionParser;
 
 class Quality :
     """ Evalue la qualité d'un coup proposé """
 
-    def __init__(self,niveau):
+    def __init__(self, niveau):
         """
         Constructeur
         """
@@ -32,7 +29,7 @@ class Quality :
         Un groupe est capturé si sa liberté passe à 0
         """
         # on parcourt les voisins du coup testé
-        for (k,l) in slef.game.goban.get_neighbour(col,lgn):
+        for (k,l) in self.game.goban.get_neighbour(col,lgn):
             # on test si c'est un emplacement adverse
             if (self.game.goban.cell[k][l]!= None and self.game.goban.cell[k][l]!= joueur.number):
                 # si le groupe associé a cet emplacement n'a qu'une liberté et

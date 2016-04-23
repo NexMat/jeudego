@@ -29,6 +29,7 @@ class IA_level1(Joueur):
         moves   : array de couples désigne les coups du joueur (lgn, col)
         """
         super().__init__(number, game, isHuman = False, score = score)
+        self.quality = Quality(1)
 
     def choose_move(self):
         """
