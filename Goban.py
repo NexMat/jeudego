@@ -198,38 +198,6 @@ def make_capture(goban, groups):
             goban[i][j] = None
     return goban
 
-black_territory = []
-white_territory = []
-
-#def detect_territory(goban):
-#    """Détecte les territoires qui sont sur le goban
-#    et leurs couleurs d'appartenance
-#    Arg: goban concerné"""
-#    global black_territory
-#    global white_territory
-#
-#    black_territory = []
-#    white_territory = []
-#
-#    coord = [(i, j) for i in range(goban.taille) for j in range(goban.taille)]
-#
-#    #for i in range(goban.taille): #TODO: optimisable avec une liste des coordonnées à màj
-#    #    for j in range(goban.taille):
-#    for (i, j) in coord:
-#       if goban.cell[i][j] == None and not is_in_territory(i,j):
-#           group = goban.find_group(i, j, [], None)
-#           if group_color(goban, group) == 0:
-#               black_territory.append(group)
-#               coord = [i for i in coord if not i in group]
-#
-#           elif group_color(goban, group) == 1:
-#               white_territory.append(group)
-#               coord = [i for i in coord if not i in group]
-#    
-#    print("\n\n\nBlack:", black_territory) #TODO Affichage
-#    print("White:", white_territory)
-#
-#    return black_territory, white_territory
 
 def detect_territory(goban):
 
@@ -274,43 +242,6 @@ def find_color(goban, coords):
     for (i, j) in coords:
         if goban.cell[i][j] != color:
             return 2
-    return color
-
-def is_in_territory(i, j):
-    """Détermine si la cellule en (i,j) est déjà dans un groupe ou non"""
-    global black_territory
-    global white_territory
-    
-    for group in black_territory:
-        if not group == None and (i, j) in group:
-            return True
-
-    for group in white_territory:
-        if not group == None and  (i, j) in group:
-            return True
-
-    return False
-
-
-def group_color(goban, group): #TODO ptet un bug
-    """Détermine la couleur d'appartenance d'un groupe
-    Arg: goban, le goban concerné
-         group, le groupe dont la couleur est à determiner
-    Ret: la couleur, 0 pour noir, 1 pour blanc, 2 pour aucun"""
-    color = None
-    
-    # On parcourt les éléments du groupe
-    for (i, j) in group:
-        # Pour chaque élément, on détermine les voisins
-        voisins = goban.get_neighbour(i, j) + [(i,j)]
-        # Parcours des voisins
-        for (k, l) in voisins:
-            if color == None:
-                color = goban.cell[k][l]
-
-            elif goban.cell[k][l] != None and goban.cell[k][l] != color:
-                return 2
-
     return color
 
 

@@ -71,7 +71,7 @@ def game_loop(game):
             sys.exit(0)
         # Si l'entree est incorrecte
         elif ret == False:
-            cprint("Erreur: entree incorrecte", fg = "red")
+            cprint("Erreur: entrée incorrecte", fg = "red")
         # Si le joueur passe
         elif ret == "pass":
             # Si le joueur précédent a passé
