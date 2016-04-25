@@ -203,6 +203,8 @@ if __name__ == '__main__':
     # Joueur noir
     if options.player1 == 'ai':
         p1 = IA_random(0, game)
+    elif options.player1 == 'ai1':
+        p1 = IA_level1(0, game, score = options.komi)
     else:
         p1 = Joueur(0, game)
     # Joueur blanc

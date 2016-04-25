@@ -14,13 +14,15 @@ from Exceptions import *
 class Quality :
     """ Evalue la qualité d'un coup proposé """
 
-    def __init__(self, niveau):
+    def __init__(self, niveau, game, joueur):
         """
         Constructeur
         """
         self.niveau = niveau
+        self.game   = game
+        self.joueur = joueur
 
-    def capture_group(self,col,lgn,goban):
+    def capture_group(self, col, lgn):
         """
         :param col : colonne du coup testé
         :param lgn : ligne du coup testé
@@ -31,7 +33,7 @@ class Quality :
         # on parcourt les voisins du coup testé
         for (k,l) in self.game.goban.get_neighbour(col,lgn):
             # on test si c'est un emplacement adverse
-            if (self.game.goban.cell[k][l]!= None and self.game.goban.cell[k][l]!= joueur.number):
+            if (self.game.goban.cell[k][l]!= None and self.game.goban.cell[k][l]!= self.joueur.number):
                 # si le groupe associé a cet emplacement n'a qu'une liberté et
                 # que cette liberté correspond au coup qui va etre joué
                 # on renvoie true
@@ -39,7 +41,7 @@ class Quality :
                     return True
         return False
 
-    def construct_group(self,col,lgn,goban):
+    def construct_group(self, col, lgn):
         """
         :param col : colonne du coup testé
         :param lgn : ligne du coup testé
@@ -54,18 +56,21 @@ class Quality :
                 return True
         return False
 
-    def importance(self,col,lgn):
-        imp = 1
-        num = 0   # a modifier avec le numéro du joueur IA
-        if not self.game.goban.test_move(col,lgn,num):
-            return(0)
-
-        #Mauvais Choix, par forcément un bon coup
-        #if construct_group(self,col,lgn,goban):
-        #    imp += len(self.game.goban.find_group(self, lgn, col, [], color))
-        
-        if self.game.goban.capture_group(col,lgn,goban):
-            # 3 est un nombre arbitraire, a discuter ..
-            imp += 3*len(self.game.goban.find_group(lgn, col, [], color))
-            
-        return imp
+    def importance(self, col, lgn):
+        try:
+            ret = self.game.goban.test_move(col, lgn, self.joueur)
+            # S'il n'y a pas de capture
+            if ret == False:
+                return 1
+            # S'il y a capture
+            else:
+                imp = 0
+                # On calcule le nombre de pierres utilisées
+                for group in ret:
+                    imp += len(group)
+                return imp * 2
+                    
+        # S'il y a erreur
+        except:
+            return 0
+           

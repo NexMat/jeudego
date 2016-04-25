@@ -29,27 +29,27 @@ class IA_level1(Joueur):
         moves   : array de couples désigne les coups du joueur (lgn, col)
         """
         super().__init__(number, game, isHuman = False, score = score)
-        self.quality = Quality(1)
+        self.quality = Quality(1, self.game, self)
 
    
 
     def choose_move(self):
         """
         Détermine la qualité du coup proposé selon les critères suivants:
-        -> le coup est t'il jouable ?
-        -> le coup est il bon pour capturer l'adversaire
+        -> le coup est-t-il jouable ?
+        -> le coup est-il bon pour capturer l'adversaire
         -> si oui, combien de cases ?
         -> suicide ? etc ..
         """
-        coord = "pass"
-        col, lgn = 0, 0
+        lgn, col = 0, 0
+        imp_tmp  = 0
         
         for i in range(self.game.goban.taille):
             for j in range(self.game.goban.taille):
-                if self.quality.importance(i,j)> self.quality.importance(col,lgn):
-                    i,j = col, lgn
-                    
-        coord = col, lgn
+                importance = self.quality.importance(j, i)
+                if importance > imp_tmp:
+                    lgn, col = i, j 
+                    imp_tmp  = importance
         
-        return coord
+        return col, lgn
     
