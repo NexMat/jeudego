@@ -35,7 +35,7 @@ class Quality :
                 # si le groupe associé a cet emplacement n'a qu'une liberté et
                 # que cette liberté correspond au coup qui va etre joué
                 # on renvoie true
-                if (len(self.game.goban.return_liberty(self,goban, find_group(self, k, l, [], color)))==1 and goban.return_liberty(self,goban, find_group(self, k, l, [], color))[0]==(k,l)):
+                if (len(self.game.goban.return_liberty(goban, self.game.goban.find_group(k, l, [], color)))==1 and self.game.goban.return_liberty(goban, self.game.goban.find_group(k, l, [], color))[0]==(k,l)):
                     return True
         return False
 
@@ -46,24 +46,26 @@ class Quality :
         :param goban : état actuel du plateau
         Détecte si le coup testé contribue a la formation d'un groupe
         """
+        num = 0
         # on parcourt les voisins du coup testé
-        for (k, l) in self.game.goban.get_neighbour(self, lgn, col):
+        for (k, l) in self.game.goban.get_neighbour(lgn, col):
             # si un des voisins est déjà en possession du joueur alors cela contribue
-            if self.game.goban.cell[k][l] == joueur.number :
+            if self.game.goban.cell[k][l] == num :
                 return True
         return False
 
     def importance(self,col,lgn):
         imp = 1
-        if not self.goban.test_move(self,col,lgn,self.joueur.number):
+        num = 0   # a modifier avec le numéro du joueur IA
+        if not self.game.goban.test_move(col,lgn,num):
             return(0)
 
-        # Mauvais Choix, par forcément un bon coup
+        #Mauvais Choix, par forcément un bon coup
         #if construct_group(self,col,lgn,goban):
-        #    imp += len(goban.find_group(self, lgn, col, [], color))
+        #    imp += len(self.game.goban.find_group(self, lgn, col, [], color))
         
-        if capture_group(self,col,lgn,goban):
+        if self.game.goban.capture_group(col,lgn,goban):
             # 3 est un nombre arbitraire, a discuter ..
-            imp += 3*len(goban.find_group(self, lgn, col, [], color))
+            imp += 3*len(self.game.goban.find_group(lgn, col, [], color))
             
         return imp

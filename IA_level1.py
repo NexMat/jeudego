@@ -6,7 +6,7 @@ last update: 13-04-2016
 
 # Première stratégie , on recherche le coup optimal
 # On ne se soucie pas de l'adversaire
-# On utilise la classe Quality
+
 
 import sys
 import timeit
@@ -31,6 +31,8 @@ class IA_level1(Joueur):
         super().__init__(number, game, isHuman = False, score = score)
         self.quality = Quality(1)
 
+   
+
     def choose_move(self):
         """
         Détermine la qualité du coup proposé selon les critères suivants:
@@ -41,10 +43,13 @@ class IA_level1(Joueur):
         """
         coord = "pass"
         col, lgn = 0, 0
+        
         for i in range(self.game.goban.taille):
             for j in range(self.game.goban.taille):
-                if self.quality.importance(self,i,j)> self.quality.importance(self,col,lgn):
+                if self.quality.importance(i,j)> self.quality.importance(col,lgn):
                     i,j = col, lgn
-        coord = col, lgn   
+                    
+        coord = col, lgn
+        
         return coord
     
