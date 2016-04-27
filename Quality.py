@@ -56,6 +56,8 @@ class Quality :
                 return True
         return False
 
+
+
     def importance(self, col, lgn):
         try:
             ret = self.game.goban.test_move(col, lgn, self.joueur)
