@@ -43,7 +43,7 @@ class IA_level1(Joueur):
         """
         lgn, col = 0, 0
         imp_tmp  = 0
-        
+    
         for i in range(self.game.goban.taille):
             for j in range(self.game.goban.taille):
                 importance = self.quality.importance(j, i)
@@ -51,5 +51,20 @@ class IA_level1(Joueur):
                     lgn, col = i, j 
                     imp_tmp  = importance
         
+        
         return col, lgn
+    
+    #def free_corner(self):
+        """
+        Détermine les coins disponibles pour le début de jeu
+        return: liste des coins dispo
+        """
+        
+    #    corners=[(4,4),(4,15),(15,4),(15,15)] # à discuter
+    #    free_corners=[]
+    #    for (k,l) in corners :
+    #        try:
+    #            ret= self.game.goban.test_move(l,k, self.joueur)
+    #            free_corners+=(k,l)
+    #    return free_corners    
     
