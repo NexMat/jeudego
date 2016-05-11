@@ -36,7 +36,7 @@ class IA_random(Joueur):
         return: les coordonnées entrées (col, lgn)
         """
         coord = "pass"
-        for i in range(100):                #on teste aléatoirement 100 fois 
+        for i in range(10000):                #on teste aléatoirement 10000 fois 
             col = random.randint(0, self.game.goban.taille - 1)
             lgn = random.randint(0, self.game.goban.taille - 1)
             try: 

@@ -201,7 +201,7 @@ if __name__ == '__main__':
     p1 = None
     p2 = None
     # Joueur noir
-    if options.player1 == 'ai':
+    if options.player1 == 'ai0':
         p1 = IA_random(0, game)
     elif options.player1 == 'ai1':
         p1 = IA_level1(0, game, score = options.komi)

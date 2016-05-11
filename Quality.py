@@ -73,4 +73,35 @@ class Quality :
         # S'il y a erreur
         except:
             return 0
-           
+
+    def fuseki (self,numero):
+        """
+        permet de paramétrer le début de partie choisir par l'IA
+        :param numero : int, caractérise le fuseki choisi
+        :param numero :
+         -> 0 : Ni Ren Sei
+         -> 1 : San Ren Sei
+         -> 2 : Fuseki Chinois
+         -> 3 : Hoshi et Shimari
+         -> 4 : San San et Shimari
+         :return : la liste des coups a jouer selon la stratégie choisie
+         """
+        grandeur = self.game.goban.taille
+        grd = grandeur - 4 
+        if (numero == 0) :
+            L = [(2,2),(2,grd)]
+            return L
+        elif (numero == 1) :
+            L = [(grd,3),(grandeur-1,grd),(grd,grd)]
+            return L
+        elif (numero == 2) :
+            L = [(grd,3),(grandeur//2,grd+1),(grd,grd)]
+            return L
+        elif (numero == 3) :
+            L = [(grd,3),(grandeur-1,grd+1),(grd+1,grd)]
+            return L
+        else :
+            L = [(grd,grd),(grd-1,grd-1),(grd+1,grd+1)]
+            return L
+         
+    

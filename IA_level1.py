@@ -43,13 +43,34 @@ class IA_level1(Joueur):
         """
         lgn, col = 0, 0
         imp_tmp  = 0
+        num = 0
+        L = self.quality.fuseki(num)
+        coord_none = [(i, j) for i in range(self.game.goban.taille) for j in range(self.game.goban.taille) if self.game.goban.cell[i][j] == None]
         
-        for i in range(self.game.goban.taille):
-            for j in range(self.game.goban.taille):
-                importance = self.quality.importance(j, i)
-                if importance > imp_tmp:
-                    lgn, col = i, j 
-                    imp_tmp  = importance
+        for i in range (len(L)) :
+            try:
+                if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
+                    return L[i][0],L[i][1]
+            except:
+                pass
         
-        return col, lgn
+            
+        for (i,j) in coord_none :
+            importance = self.quality.importance(i, j)
+            if (importance > imp_tmp):
+                lgn, col = i, j 
+                imp_tmp  = importance
+                coord = (col, lgn)
+
+        if imp_tmp == 0 :
+            for col in range(self.game.goban.taille):
+                for lgn in range(self.game.goban.taille):
+                    try: 
+                        if not self.game.goban.test_move(col, lgn, self) == False:
+                            coord = (col, lgn)
+                            return coord
+                    except:
+                        pass
+        
+        return coord
     
