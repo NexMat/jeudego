@@ -45,6 +45,7 @@ class IA_level1(Joueur):
         imp_tmp  = 0
         num = 0
         L = self.quality.fuseki(num)
+        Liste = []
         coord_none = [(i, j) for i in range(self.game.goban.taille) for j in range(self.game.goban.taille) if self.game.goban.cell[i][j] == None]
         
         for i in range (len(L)) :
@@ -58,9 +59,15 @@ class IA_level1(Joueur):
         for (i,j) in coord_none :
             importance = self.quality.importance(i, j)
             if (importance > imp_tmp):
-                lgn, col = i, j 
+                Liste = [(i,j)]
                 imp_tmp  = importance
-                coord = (col, lgn)
+            if (importance == imp_tmp):
+                Liste+=[(i,j)]
+                
+        N = len(Liste)
+        k = random.randint(1,N-1)
+        
+                
 
         if imp_tmp == 0 :
             for col in range(self.game.goban.taille):
@@ -71,6 +78,7 @@ class IA_level1(Joueur):
                             return coord
                     except:
                         pass
+
+        return(Liste[k][0],Liste[k][1])
         
-        return coord
     

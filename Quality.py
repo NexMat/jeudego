@@ -56,19 +56,33 @@ class Quality :
                 return True
         return False
 
+    def influence(self,col,lgn):
+        inf = 0
+        a = self.game.goban.detect_territory(goban)
+        new_goban = []
+        for old_lines in self.cell:
+            new_goban.append(list(old_lines))
+        new_goban[lgn][col] = self.joueur.number
+        b = self.game.goban.detect_territory(new_goban)
+        if length(b)>length(a):
+            inf += (length(b)-length(a))
+        return(inf)
+        
+
     def importance(self, col, lgn):
         try:
             ret = self.game.goban.test_move(col, lgn, self.joueur)
+            inf = influence(self,col,lgn)
             # S'il n'y a pas de capture
             if ret == False:
-                return 1
+                return (1+inf)
             # S'il y a capture
             else:
                 imp = 0
                 # On calcule le nombre de pierres utilisées
                 for group in ret:
                     imp += len(group)
-                return imp * 2
+                return imp * 2 + inf
                     
         # S'il y a erreur
         except:
