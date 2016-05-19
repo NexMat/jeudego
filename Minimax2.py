@@ -33,3 +33,51 @@ last update: 19-05-16
 # 8) Renvoyer le coup choisi à partir de l'indice retenu et de la liste 1
 
 
+import sys
+import timeit
+import random
+from Joueur import Joueur
+from Goban import *
+from Exceptions import *
+from Quality import Quality
+
+class Minimax2(Joueur):
+    """ Modélise les caractéristiques du joueur IA Minimax2 """
+
+    def __init__(self, number, game, isHuman = False, score = 0):
+        """
+        Constructeur : Definit les caracteristiques du joueur IA
+        isHuman : bool définit si le joueur est humain ou non
+        clock   : float, temps de jeu courant du joueur
+        score   : int, score du joueur
+        number  : int, numero du joueur IA (0 ou 1)
+        moves   : array de couples désigne les coups du joueur (lgn, col)
+        """
+        super().__init__(number, game, isHuman = False, score = score)
+        self.quality = Quality(2, self.game, self)
+
+    def copie_goban(self):
+        """
+        Fonction qui copie le goban actuel dans un goban a part
+        """
+        new_goban = []
+        for old_lines in self.game.goban.cell:
+            new_goban.append(list(old_lines))
+        return(new_goban)
+
+
+    def copie_bogan_ajout(self,emplacement):
+        """
+        Fonction qui copie le goban actuel et y insère une pierre
+        """
+        new_goban = copie_goban(self)
+        new_goban.cell.emplacement[0]emplacement[1]= self.joueur.number
+        return(new_goban)
+
+    def liste_coups_possibles(self):
+        """
+        Fonction qui renvoie la liste des coups possibles du goban
+        """
+        
+        
+        
