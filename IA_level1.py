@@ -1,7 +1,7 @@
 """
 IA_level1
 @author: MrChapelle
-last update: 13-04-2016
+last update: 13-05-2016
 """
 
 # Première stratégie , on recherche le coup optimal
@@ -43,28 +43,42 @@ class IA_level1(Joueur):
         """
         lgn, col = 0, 0
         imp_tmp  = 0
-    
-        for i in range(self.game.goban.taille):
-            for j in range(self.game.goban.taille):
-                importance = self.quality.importance(j, i)
-                if importance > imp_tmp:
-                    lgn, col = i, j 
-                    imp_tmp  = importance
+        num = 0
+        L = self.quality.fuseki(num)
+        Liste = []
+        coord_none = [(i, j) for i in range(self.game.goban.taille) for j in range(self.game.goban.taille) if self.game.goban.cell[i][j] == None]
         
+        for i in range (len(L)) :
+            try:
+                if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
+                    return L[i][0],L[i][1]
+            except:
+                pass
         
-        return col, lgn
-    
-    #def free_corner(self):
-        """
-        Détermine les coins disponibles pour le début de jeu
-        return: liste des coins dispo
-        """
+            
+        for (i,j) in coord_none :
+            importance = self.quality.importance(i, j)
+            if (importance > imp_tmp):
+                Liste = [(i,j)]
+                imp_tmp  = importance
+            if (importance == imp_tmp):
+                Liste+=[(i,j)]
+                
+        N = len(Liste)
+        k = random.randint(1,N-1)
         
-    #    corners=[(4,4),(4,15),(15,4),(15,15)] # à discuter
-    #    free_corners=[]
-    #    for (k,l) in corners :
-    #        try:
-    #            ret= self.game.goban.test_move(l,k, self.joueur)
-    #            free_corners+=(k,l)
-    #    return free_corners    
+                
+
+        if imp_tmp == 0 :
+            for col in range(self.game.goban.taille):
+                for lgn in range(self.game.goban.taille):
+                    try: 
+                        if not self.game.goban.test_move(col, lgn, self) == False:
+                            coord = (col, lgn)
+                            return coord
+                    except:
+                        pass
+
+        return(Liste[k][0],Liste[k][1])
+        
     
