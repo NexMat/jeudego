@@ -78,6 +78,18 @@ class Minimax2(Joueur):
         """
         Fonction qui renvoie la liste des coups possibles du goban
         """
-        
-        
-        
+
+        # On récupère toutes les cases vides
+        coord_none = [(i, j) for i in range(self.game.goban.taille) for j in range(self.game.goban.taille) if self.game.goban.cell[i][j] == None]
+
+        possible_moves = []
+
+        for (i, j) in coord_none:
+            try:
+                if self.game.goban.test_move(i, j, self) == False:
+                    possible_moves.append((i, j))
+            except:
+                pass
+
+        return possible_moves
+            
