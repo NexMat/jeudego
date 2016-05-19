@@ -1,7 +1,7 @@
 """
 IA_level1
 @author: MrChapelle
-last update: 13-04-2016
+last update: 13-05-2016
 """
 
 # Première stratégie , on recherche le coup optimal
