@@ -84,6 +84,7 @@ def game_loop(game):
                 player_passed = True
                 valid = True
         else:
+            player_passed = False
             try:
                 (col, lgn) = ret
                 # Si le coup est possible
@@ -200,6 +201,7 @@ if __name__ == '__main__':
     # Création des joueurs
     p1 = None
     p2 = None
+
     # Joueur noir
     if options.player1 == 'ai':
         p1 = IA_random(0, game)
@@ -207,8 +209,9 @@ if __name__ == '__main__':
         p1 = IA_level1(0, game, score = options.komi)
     else:
         p1 = Joueur(0, game)
+
     # Joueur blanc
-    if options.player2 == 'ai0':
+    if options.player2 == 'ai':
         p2 = IA_random(1, game, score = options.komi)
     elif options.player2 == 'ai1':
         p2 = IA_level1(1, game, score = options.komi)
