@@ -1,7 +1,7 @@
 """
 Minimax2
 @author: MrChapelle
-last update: 19-05-16
+last update: 23-05-16
 """
 
 #Implémentation de l'algorithme du minimax
