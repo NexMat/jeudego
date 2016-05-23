@@ -1,7 +1,7 @@
 """
 Partie
 @author: Nexmat
-last update: 03-04-2016
+last update: 23-04-2016
 """
 
 import sys
