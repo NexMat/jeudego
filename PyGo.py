@@ -13,6 +13,7 @@ from Exceptions import *
 from Colors import cprint
 from IA_random import IA_random
 from IA_level1 import IA_level1
+from Minimax2 import Minimax2
 from optparse import OptionParser
 
 args    = None
@@ -207,7 +208,7 @@ if __name__ == '__main__':
         p1 = IA_random(0, game)
     elif options.player1 == 'ai1':
         p1 = IA_level1(0, game, score = options.komi)
-    elif options.player1 == 'minimax2':
+    elif options.player1 == 'ai2':
         p1 = Minimax2(0, game, score = options.komi)
     else:
         p1 = Joueur(0, game)
@@ -217,8 +218,8 @@ if __name__ == '__main__':
         p2 = IA_random(1, game, score = options.komi)
     elif options.player2 == 'ai1':
         p2 = IA_level1(1, game, score = options.komi)
-    elif options.player2 == 'minimax2':
-        p1 = Minimax2(1, game, score = options.komi)
+    elif options.player2 == 'ai2':
+        p2 = Minimax2(1, game, score = options.komi)
     else:
         p2 = Joueur(1, game, score = options.komi)
 

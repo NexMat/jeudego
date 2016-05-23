@@ -178,23 +178,19 @@ class Minimax2(Joueur):
         Renvoie le coup choisi à partir de l'algorithme du minimax pour n=2
         """
         #etape 1
-        try:
-            Liste_Initiale = liste_coups_possibles()        
-            if Liste_Initiale != [] :
-                #etape 2 :
-                Liste_Importances = liste_importances_coups_possibles()
-                #etape 3 :
-                Liste_Gobans = etape_3()
-                #etape 4_5 :
-                Liste_Gobans2 = etape_4_5(Liste_Gobans)
-                #etape 6 :
-                Liste_Importances2 = etape_6(Liste_Gobans2 , Liste_Importances)
-                #etape 7_8 :
-                return(etape_8(etape_7(Liste_Importances2),Liste_Initiale))
-        except:
-            pass
-
-
+        Liste_Initiale = liste_coups_possibles()        
+        if Liste_Initiale != [] :
+            #etape 2 :
+            Liste_Importances = liste_importances_coups_possibles()
+            #etape 3 :
+            Liste_Gobans = etape_3()
+            #etape 4_5 :
+            Liste_Gobans2 = etape_4_5(Liste_Gobans)
+            #etape 6 :
+            Liste_Importances2 = etape_6(Liste_Gobans2 , Liste_Importances)
+            #etape 7_8 :
+            return(etape_8(etape_7(Liste_Importances2),Liste_Initiale))
+        
         for (i,j) in coord_none :
             importance = self.quality.importance(i, j)
             if (importance > imp_tmp):
