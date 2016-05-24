@@ -40,6 +40,7 @@ from Joueur import Joueur
 from Goban import *
 from Exceptions import *
 from Quality import Quality
+from IA_level1 import IA_level1
 
 class Minimax2(Joueur):
     """ Modélise les caractéristiques du joueur IA Minimax2 """
@@ -56,6 +57,46 @@ class Minimax2(Joueur):
         super().__init__(number, game, isHuman = False, score = score)
         self.quality = Quality(2, self.game, self)
 
+
+    def copie_liste(self,L):
+        n = len(L)
+        rep = []
+        for k in range (n):
+            rep.append(L[k])
+            
+        return rep
+
+    
+    def choose_move_aleat(self):
+        """
+        Determine le mouvement de l'IA jusqu'à
+        obtenir un coup possible
+        
+        return: les coordonnées entrées (col, lgn)
+        """
+        coord = "pass"
+        for i in range(10000):                #on teste aléatoirement 10000 fois 
+            col = random.randint(0, self.game.goban.taille - 1)
+            lgn = random.randint(0, self.game.goban.taille - 1)
+            try: 
+                if self.game.goban.test_move(col, lgn, self) == False:
+                    coord = (col, lgn)
+                    sys.stdout.flush()
+                    return coord
+            except Forbidden_move as e:
+                pass
+
+        for col in range(self.game.goban.taille):
+            for lgn in range(self.game.goban.taille):
+                try: 
+                    if not self.game.goban.test_move(col, lgn, self) == False:
+                        coord = (col, lgn)
+                        return coord
+                except:
+                    pass
+
+        return coord
+
     def copie_goban(self):
         """
         Fonction qui copie le goban actuel dans un goban a part
@@ -70,8 +111,8 @@ class Minimax2(Joueur):
         """
         Fonction qui copie le goban actuel et y insère une pierre
         """
-        new_goban = copie_goban(self)
-        new_goban.cell[emplacement[0]][emplacement[1]]= self.joueur.number
+        new_goban = self.copie_goban()
+        new_goban[emplacement[0]][emplacement[1]]= self.number
         return(new_goban)
 
     def liste_coups_possibles(self):             # etape 1
@@ -97,7 +138,7 @@ class Minimax2(Joueur):
         """
         Fonction qui renvoie la liste des importances des coups possibles
         """
-        L = liste_coups_possibles()
+        L = self.liste_coups_possibles()
         Res = []
         for i in range(len(L)) :
             Res.append(self.quality.importance(L[i][1],L[i][0]))
@@ -107,10 +148,10 @@ class Minimax2(Joueur):
         """
         Fonction qui réalise l'étape 2
         """
-        L = liste_coups_possibles()
+        L = self.liste_coups_possibles()
         Liste_Gobans = []
         for element in L:
-            Liste_Gobans.append(copie_bogan_ajout(element))
+            Liste_Gobans.append(self.copie_bogan_ajout(element))
         return Liste_Gobans
 
                 
@@ -122,32 +163,38 @@ class Minimax2(Joueur):
         étape_3
         """
         #copie du goban actuel"
-        Aux = copie_goban(self)
-        Liste_Aux = Liste_Gobans
-        for Goban in Liste_Aux :
+        Liste_Goban_Actu = [self.copie_goban() for k in range(len(Liste_Gobans))]
+        Liste_Aux = self.copie_liste(Liste_Gobans)
+        
+        for k in range(len(Liste_Aux)) :
                         
             #le goban prend les valeurs des gobans possibles"
-            self.game.goban = Goban
+            self.game.goban = Liste_Aux[k]
             #on choisit le coup du goban virtuel
-            coup = self.IA_level1.choose_move()
+            ia = IA_level1((1+self.number)%2,self.game)
+            ia.game.goban = self.game.goban
+            coup = ia.choose_move()
             #on ajoute ce coup au Bogan de la liste
-            Goban = copie_bogan_ajout(coup)
+            Liste_Gobans[k] = self.copie_bogan_ajout(coup)
             #on rend sa valeur initial au goban
-            self.game.goban = Aux
-
-        return Liste_Aux
+            self.game.goban = Liste_Aux[k]
+          
+        return Liste_Gobans
              
     def etape_6 (self, Liste_Gobans, Liste_Importances):
         """
         Fonction qui réalise l'étape 6
         """
-        Aux = copie_goban(self)
+        Aux = self.copie_goban()
         imp = 0
         Liste_Importances2 = Liste_Importances
         
         for k in range (len(Liste_Gobans)):
             self.game.goban = Liste_Gobans[k]
-            imp = self.quality.importance(self.IA_level1.choose_move()[0],self.IA_level1.choose_move()[1])
+            ia = IA_level1((1+self.number)%2,self.game)
+            ia.game.goban = self.game.goban
+            coup = ia.choose_move()
+            imp = self.quality.importance(coup[0],coup[1])
             Liste_Importances2[k] += imp
             self.game.goban = Aux
             imp = 0
@@ -173,48 +220,26 @@ class Minimax2(Joueur):
 
     
 
-    def choose_move_minimax2(self):
+    def choose_move(self):
         """
         Renvoie le coup choisi à partir de l'algorithme du minimax pour n=2
         """
         #etape 1
-        Liste_Initiale = liste_coups_possibles()        
+        Liste_Initiale = self.liste_coups_possibles()        
         if Liste_Initiale != [] :
             #etape 2 :
-            Liste_Importances = liste_importances_coups_possibles()
+            Liste_Importances = self.liste_importances_coups_possibles()
             #etape 3 :
-            Liste_Gobans = etape_3()
+            Liste_Gobans = self.etape_3()
             #etape 4_5 :
-            Liste_Gobans2 = etape_4_5(Liste_Gobans)
+            Liste_Gobans2 = self.etape_4_5(Liste_Gobans)
             #etape 6 :
-            Liste_Importances2 = etape_6(Liste_Gobans2 , Liste_Importances)
+            Liste_Importances2 = self.etape_6(Liste_Gobans2 , Liste_Importances)
             #etape 7_8 :
-            return(etape_8(etape_7(Liste_Importances2),Liste_Initiale))
+            return(self.etape_8(self.etape_7(Liste_Importances2),Liste_Initiale))
         
-        for (i,j) in coord_none :
-            importance = self.quality.importance(i, j)
-            if (importance > imp_tmp):
-                Liste = [(i,j)]
-                imp_tmp  = importance
-            if (importance == imp_tmp):
-                Liste+=[(i,j)]
-                
-        N = len(Liste)
-        k = random.randint(1,N-1)
-        
-                
-
-        if imp_tmp == 0 :
-            for col in range(self.game.goban.taille):
-                for lgn in range(self.game.goban.taille):
-                    try: 
-                        if not self.game.goban.test_move(col, lgn, self) == False:
-                            coord = (col, lgn)
-                            return coord
-                    except:
-                        pass
-
-        return(Liste[k][0],Liste[k][1])
+        else:
+            pass
         
             
 
