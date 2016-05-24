@@ -41,7 +41,7 @@ class IA_level1(Joueur):
         -> si oui, combien de cases ?
         -> suicide ? etc ..
         """
-        n = 9 # = self.game.goban.taille
+        n = self.game.goban.taille
         lgn, col = 0, 0
         imp_tmp  = 0
         num = 0

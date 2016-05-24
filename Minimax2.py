@@ -169,15 +169,18 @@ class Minimax2(Joueur):
         for k in range(len(Liste_Aux)) :
                         
             #le goban prend les valeurs des gobans possibles"
-            self.game.goban = Liste_Aux[k]
+            self.game.goban.cell = Liste_Aux[k]
+            
             #on choisit le coup du goban virtuel
             ia = IA_level1((1+self.number)%2,self.game)
             ia.game.goban = self.game.goban
             coup = ia.choose_move()
+            
             #on ajoute ce coup au Bogan de la liste
             Liste_Gobans[k] = self.copie_bogan_ajout(coup)
+            
             #on rend sa valeur initial au goban
-            self.game.goban = Liste_Aux[k]
+            self.game.goban.cell = Liste_Aux[k]
           
         return Liste_Gobans
              
@@ -185,18 +188,23 @@ class Minimax2(Joueur):
         """
         Fonction qui réalise l'étape 6
         """
-        Aux = self.copie_goban()
+        Liste_Aux = [self.copie_goban()for k in range(len(Liste_Importances))]
         imp = 0
-        Liste_Importances2 = Liste_Importances
+        Liste_Importances2 = self.copie_liste(Liste_Importances)
         
         for k in range (len(Liste_Gobans)):
-            self.game.goban = Liste_Gobans[k]
+            
+            self.game.goban.cell = Liste_Gobans[k]
+            
             ia = IA_level1((1+self.number)%2,self.game)
             ia.game.goban = self.game.goban
             coup = ia.choose_move()
+            
             imp = self.quality.importance(coup[0],coup[1])
             Liste_Importances2[k] += imp
-            self.game.goban = Aux
+            
+            self.game.goban.cell = Liste_Aux[k]
+            
             imp = 0
             
         return Liste_Importances2
@@ -224,6 +232,23 @@ class Minimax2(Joueur):
         """
         Renvoie le coup choisi à partir de l'algorithme du minimax pour n=2
         """
+
+        n = self.game.goban.taille
+        lgn, col = 0, 0
+        imp_tmp  = 0
+        num = 0
+        L = self.quality.fuseki(num)
+        Liste = []
+        coord_none = [(i, j) for i in range(n) for j in range(n) if self.game.goban.cell[i][j] == None]
+        
+        for i in range (len(L)) :
+            try:
+                if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
+                    return L[i][0],L[i][1]
+            except:
+                pass
+            
+        
         #etape 1
         Liste_Initiale = self.liste_coups_possibles()        
         if Liste_Initiale != [] :
