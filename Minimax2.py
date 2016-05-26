@@ -146,7 +146,7 @@ class Minimax2(Joueur):
 
     def etape_3 (self):
         """
-        Fonction qui réalise l'étape 2
+        Fonction qui réalise l'étape 3
         """
         L = self.liste_coups_possibles()
         Liste_Gobans = []
