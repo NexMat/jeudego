@@ -91,3 +91,54 @@ class Joueur:
         """
         self.moves.append((lgn, col))
 
+    def detect_territory(self):
+        """Detection du territoire par un parcours en largeur"""
+
+        # On récupère toutes les cases vides
+        coord_none = [(i, j) for i in range(self.game.goban.taille) for j in range(self.game.goban.taille) if self.game.goban.cell[i][j] == None]
+
+        while coord_none != []:
+            (lgn, col) = coord_none.pop(0)
+            (empty_cells, adverse_cells) = self.BFS(lgn, col)
+
+            # Si on ne rencontre pas de pierres adverses lors du parcours, le 
+            if adverse_cells == []:
+                pass
+
+            
+
+        
+    def BFS(self, lgn, col):
+        """Parcourt en largeur pour déterminer les territoires"""
+
+        # Cellules vides
+        empty_cells = []
+        # Cellules adverses
+        adverse_cells = []
+
+        # Initialisation de la file
+        queue = [(lgn, col)]
+
+        while queue != []:
+            # On récupère le premier élément de la file
+            (i,j) = queue.pop(0)
+            # On récupère la liste des voisins 
+            voisins = self.game.goban.get_neighbour(i, j)
+
+            for (k, l) in voisins:
+
+                # Si le voisin est vide
+                if self.game.goban.cell[k][l] == None:
+                    queue.append((k,l)) # On ajoute à la file
+                    empty_cells.append((k,l)) # On l'enregistre pour optimisation
+
+                # Si il est de la même couleur
+                elif self.game.goban.cell[k][l] == self.number:
+                    pass # On ne fait rien
+
+                # Si il est de couleur différente
+                else:
+                    adverse_cells.append((k, l)) # On l'enregistre
+
+        return empty_cells, adverse_cells
+
