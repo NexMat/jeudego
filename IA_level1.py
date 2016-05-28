@@ -41,12 +41,13 @@ class IA_level1(Joueur):
         -> si oui, combien de cases ?
         -> suicide ? etc ..
         """
+        n = self.game.goban.taille
         lgn, col = 0, 0
         imp_tmp  = 0
         num = 0
         L = self.quality.fuseki(num)
         Liste = []
-        coord_none = [(i, j) for i in range(self.game.goban.taille) for j in range(self.game.goban.taille) if self.game.goban.cell[i][j] == None]
+        coord_none = [(i, j) for i in range(n) for j in range(n) if self.game.goban.cell[i][j] == None]
         
         for i in range (len(L)) :
             try:
@@ -70,8 +71,8 @@ class IA_level1(Joueur):
                 
 
         if imp_tmp == 0 :
-            for col in range(self.game.goban.taille):
-                for lgn in range(self.game.goban.taille):
+            for col in range(n):
+                for lgn in range(n):
                     try: 
                         if not self.game.goban.test_move(col, lgn, self) == False:
                             coord = (col, lgn)
