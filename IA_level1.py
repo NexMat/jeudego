@@ -41,35 +41,53 @@ class IA_level1(Joueur):
         -> si oui, combien de cases ?
         -> suicide ? etc ..
         """
+        # je met la valeur de taille en memoire (gain de complexité)
         n = self.game.goban.taille
+        # j'initialise des valeurs de lignes et colonnes
         lgn, col = 0, 0
+        # j'initialise mon importance maximale
         imp_tmp  = 0
+        # num correspond à la solution choisi pour le debut de partie (cf Quality -> Fuseki (num) )
         num = 0
+        # je calcule ma liste des coups de debut de partie
         L = self.quality.fuseki(num)
+        # je cree une liste annexe vide
         Liste = []
-        coord_none = [(i, j) for i in range(n) for j in range(n) if self.game.goban.cell[i][j] == None]
-        
+      
+        # tant que L n'est pas vide , si le coup est jouable, je le joue
         for i in range (len(L)) :
             try:
                 if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
                     return L[i][0],L[i][1]
             except:
                 pass
+
+        # je cree une liste des coups non joués
+        coord_none = [(i, j) for i in range(n) for j in range(n) if self.game.goban.cell[i][j] == None]
+
         
-            
+        # sinon, je parcours l'ensemble des coups non joués   
         for (i,j) in coord_none :
-            importance = self.quality.importance(i, j)
-            if (importance > imp_tmp):
+            importance = self.quality.importance(j, i)
+            if (importance > imp_tmp): # si le coup est le plus important on le choisit seul
                 Liste = [(i,j)]
                 imp_tmp  = importance
-            if (importance == imp_tmp):
+            if (importance == imp_tmp): # au cas ou plusieurs coups soit d'importance maximale
                 Liste+=[(i,j)]
+
                 
         N = len(Liste)
         k = random.randint(1,N-1)
-        
-                
+             
+        #je renvoie un coup pris dans la liste des coups jouables avec une importance maximale (aléatoirement)
+        if L != []:
+            return(Liste[k][0],Liste[k][1])
+        else:
+            # si la liste est vide aucun coup n'est jouable, donc on ne joue pas
+            pass
 
+                     
+        """ inutile ???
         if imp_tmp == 0 :
             for col in range(n):
                 for lgn in range(n):
@@ -78,8 +96,7 @@ class IA_level1(Joueur):
                             coord = (col, lgn)
                             return coord
                     except:
-                        pass
-
-        return(Liste[k][0],Liste[k][1])
+                        pass"""
+        
         
     
