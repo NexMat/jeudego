@@ -7,6 +7,7 @@ last update: 03-04-2016
 import sys
 from Exceptions import *
 from Colors import cprint 
+
 class Goban:
     """Modélise un plateau de jeu de Go, le goban."""
 
@@ -226,8 +227,8 @@ def detect_territory(goban):
         elif find_color(goban, voisins) == 1:
             white_territory.append((i,j))
 
-    print("\n\n\nBlack:", black_territory) #TODO Affichage
-    print("White:", white_territory)
+    #print("\n\n\nBlack:", black_territory) #TODO Affichage
+    #print("White:", white_territory)
                 
     return black_territory, white_territory
 

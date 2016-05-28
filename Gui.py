@@ -98,7 +98,7 @@ def display_min(goban):
 
 def round_display(partie):
     # On affiche le numéro du tour
-    cprint("\n        - Tour numéro", str(partie.tour + 1), "-", fg = "blue")
+    cprint("\n\n\n        - Tour numéro", str(partie.tour + 1), "-", fg = "blue")
     cprint("----------------------------------", fg = "blue")
     
     # Score du joueur noir
@@ -124,7 +124,7 @@ def round_display(partie):
 
 def round_display_min(partie):
     # On affiche le numéro du tour
-    print("\n        - Tour numéro", str(partie.tour + 1), "-")
+    print("\n\n\n        - Tour numéro", str(partie.tour + 1), "-")
     print("----------------------------------")
     
     # Score du joueur noir
@@ -147,3 +147,41 @@ def round_display_min(partie):
         print("blanc ", end = "")
     print(">>", end = "")
 
+
+def display_end_game(partie):
+    print("\n\n")
+    cprint(" ---------------------------------- ", fg = "blue")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint("|", fg = "black", end = "")
+    cprint("          FIN DE PARTIE           ", fg = "blue",  end = "")
+    cprint("|", fg = "white", end = "\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    # Score du joueur noir
+    cprint("| Joueur noir: " + str(partie.player1.score), fg = "black", bg = "blue", end = "")
+    # Score du joueur blanc
+    cprint(" Joueur blanc: " + str(partie.player2.score) + " |", fg = "white", bg = "blue", end = "\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    # Territoire du joueur noir
+    cprint("| Terr. noir: " + str(len(partie.player1.territory)) + " ", fg = "black", bg = "blue", end = "")
+    # Territoire du joueur blanc
+    cprint(" Terr. blanc: " + str(len(partie.player2.territory)) + "    |", fg = "white", bg = "blue", end = "\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    # Territoire du joueur noir
+    cprint("| Score noir: " + str(len(partie.player1.territory) + partie.player1.score) + " ", fg = "black", bg = "blue", end = "")
+    # Territoire du joueur blanc
+    cprint(" Score blanc: " + str(len(partie.player2.territory) + partie.player2.score) + "  |", fg = "white", bg = "blue", end = "\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint("|", fg = "black", end = "")
+    if (len(partie.player1.territory) + partie.player1.score < len(partie.player2.territory) + partie.player2.score):
+        cprint("      VICTOIRE JOUEUR BLANC       ", fg = "blue", end = "")
+    elif (len(partie.player1.territory) + partie.player1.score > len(partie.player2.territory) + partie.player2.score):
+        cprint("      VICTOIRE JOUEUR NOIR        ", fg = "blue", end = "")
+    else:
+        cprint("             EGALITE              ", fg = "blue", end = "")
+    cprint("|", fg = "white", end = "\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint("|                                  ", fg = "black", end = "|\n")
+    cprint(" ---------------------------------- ", fg = "blue")

@@ -1,6 +1,6 @@
 """
 Partie
-@author: Nexmat
+@author: Nexmat, MrChapelle
 last update: 23-04-2016
 """
 
@@ -11,9 +11,6 @@ from Goban import *
 from Joueur import *
 from Exceptions import *
 from Colors import cprint
-from IA_random import IA_random
-from IA_level1 import IA_level1
-from Minimax2 import Minimax2
 from optparse import OptionParser
 
 args    = None
@@ -79,6 +76,7 @@ def game_loop(game):
             # Si le joueur précédent a passé
             if player_passed == True:
                 #TODO Affichage de fin de partie
+                end_game(game)
                 print()
                 sys.exit(0)
             else:
@@ -117,14 +115,22 @@ def game_loop(game):
                 if options.test_mode == True:
                     sys.exit(1)
 
-        # Detection des territoires
-        (black_territory, white_territory) = detect_territory(game.goban)
-
         # Si c'est valide
         if valid == True:
             # On passe au tour suivant
             game.tour += 1
 
+
+def end_game(partie):
+    # Actualisation des scores
+    p1.update_score()
+    p2.update_score()
+    
+    # Detection des territoires
+    (black_territory, white_territory) = detect_territory(game.goban)
+    p1.territory = black_territory
+    p2.territory = white_territory
+    display_end_game(partie)
 
 def parse_coord(coord):
     # Pour quitter
@@ -204,24 +210,23 @@ if __name__ == '__main__':
     p2 = None
 
     # Joueur noir
-    if options.player1 == 'ai0':
-        p1 = IA_random(0, game)
-    elif options.player1 == 'ai1':
-        p1 = IA_level1(0, game, score = options.komi)
-    elif options.player1 == 'ai2':
-        p1 = Minimax2(0, game, score = options.komi)
-    else:
+    if options.player1 == "" or options.player1 == "player1":
         p1 = Joueur(0, game)
+    else:
+        filename = options.player1
+        filename = filename[:-3]
+        exec("from " + filename + " import " + filename)
+        exec("p1 = " + filename + "(0, game)")
+
 
     # Joueur blanc
-    if options.player2 == 'ai0':
-        p2 = IA_random(1, game, score = options.komi)
-    elif options.player2 == 'ai1':
-        p2 = IA_level1(1, game, score = options.komi)
-    elif options.player2 == 'ai2':
-        p2 = Minimax2(1, game, score = options.komi)
-    else:
+    if options.player2 == "" or options.player2 == "player2":
         p2 = Joueur(1, game, score = options.komi)
+    else:
+        filename = options.player2
+        filename = filename[:-3]
+        exec("from " + filename + " import " + filename)
+        exec("p2 = " + filename + "(1, game, score = options.komi)")
 
     game.player1 = p1
     game.player2 = p2
