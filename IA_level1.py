@@ -49,6 +49,7 @@ class IA_level1(Joueur):
         Liste = []
         coord_none = [(i, j) for i in range(n) for j in range(n) if self.game.goban.cell[i][j] == None]
         
+        # Debut de partie
         for i in range (len(L)) :
             try:
                 if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
@@ -67,8 +68,6 @@ class IA_level1(Joueur):
                 
         N = len(Liste)
         k = random.randint(1,N-1)
-        
-                
 
         if imp_tmp == 0 :
             for col in range(n):
