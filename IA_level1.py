@@ -51,7 +51,6 @@ class IA_level1(Joueur):
         num = 0
         # je calcule ma liste des coups de debut de partie
         L = self.quality.fuseki(num)
-        Liste = []
         
         # Debut de partie
         # tant que L n'est pas vide , si le coup est jouable, je le joue
@@ -77,7 +76,6 @@ class IA_level1(Joueur):
             except Forbidden_move as e:
                 pass
 
-        
         if imp_tmp != 0 :
             return coup
         
@@ -106,10 +104,3 @@ class IA_level1(Joueur):
 
             return coord
             
-
-       
-                     
-        
-        
-        
-    
