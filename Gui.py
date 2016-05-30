@@ -185,3 +185,41 @@ def display_end_game(partie):
     cprint("|                                  ", fg = "black", end = "|\n")
     cprint("|                                  ", fg = "black", end = "|\n")
     cprint(" ---------------------------------- ", fg = "blue")
+
+def display_end_game_min(partie):
+    print("\n\n")
+    print(" ---------------------------------- ")
+    print("|                                  ", end = "|\n")
+    print("|", end = "")
+    print("          FIN DE PARTIE           ",  end = "")
+    print("|", end = "\n")
+    print("|                                  ", end = "|\n")
+    # Score du joueur noir
+    print("| Joueur noir: " + str(partie.player1.score), end = "")
+    # Score du joueur blanc
+    print(" Joueur blanc: " + str(partie.player2.score) + " |", end = "\n")
+    print("|                                  ", end = "|\n")
+    print("|                                  ", end = "|\n")
+    # Territoire du joueur noir
+    print("| Terr. noir: " + str(len(partie.player1.territory)) + " ", end = "")
+    # Territoire du joueur blanc
+    print(" Terr. blanc: " + str(len(partie.player2.territory)) + "    |", end = "\n")
+    print("|                                  ", end = "|\n")
+    print("|                                  ", end = "|\n")
+    # Territoire du joueur noir
+    print("| Score noir: " + str(len(partie.player1.territory) + partie.player1.score) + " ", end = "")
+    # Territoire du joueur blanc
+    print(" Score blanc: " + str(len(partie.player2.territory) + partie.player2.score) + "  |", end = "\n")
+    print("|                                  ", end = "|\n")
+    print("|", end = "")
+    if (len(partie.player1.territory) + partie.player1.score < len(partie.player2.territory) + partie.player2.score):
+        print("      VICTOIRE JOUEUR BLANC       ", end = "")
+    elif (len(partie.player1.territory) + partie.player1.score > len(partie.player2.territory) + partie.player2.score):
+        print("      VICTOIRE JOUEUR NOIR        ", end = "")
+    else:
+        print("             EGALITE              ", end = "")
+    print("|", end = "\n")
+    print("|                                  ", end = "|\n")
+    print("|                                  ", end = "|\n")
+    print("|                                  ", end = "|\n")
+    print(" ---------------------------------- ")

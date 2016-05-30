@@ -164,12 +164,12 @@ class Minimax2(Joueur):
         """
         #copie du goban actuel"
         Liste_Goban_Actu = [self.copie_goban() for k in range(len(Liste_Gobans))]
-        Liste_Aux = self.copie_liste(Liste_Gobans)
-        
-        for k in range(len(Liste_Aux)) :
+        Liste_Aux = self.copie_liste(self.game. goban.cell) #DEBUG
+
+        for k in range(len(Liste_Goban_Actu)) :
                         
             #le goban prend les valeurs des gobans possibles"
-            self.game.goban.cell = Liste_Aux[k]
+            self.game.goban.cell = Liste_Goban_Actu[k]
             
             #on choisit le coup du goban virtuel
             ia = IA_level1((1+self.number)%2,self.game)
@@ -180,15 +180,16 @@ class Minimax2(Joueur):
             Liste_Gobans[k] = self.copie_bogan_ajout(coup)
             
             #on rend sa valeur initial au goban
-            self.game.goban.cell = Liste_Aux[k]
-          
+            self.game.goban.cell = Liste_Aux
+            
         return Liste_Gobans
              
     def etape_6 (self, Liste_Gobans, Liste_Importances):
         """
         Fonction qui réalise l'étape 6
         """
-        Liste_Aux = [self.copie_goban()for k in range(len(Liste_Importances))]
+        #Liste_Aux = [self.copie_goban()for k in range(len(Liste_Importances))] DEBUG
+        Liste_Aux = self.copie_liste(self.game.goban.cell)
         imp = 0
         Liste_Importances2 = self.copie_liste(Liste_Importances)
         
@@ -203,7 +204,7 @@ class Minimax2(Joueur):
             imp = self.quality.importance(coup[0],coup[1])
             Liste_Importances2[k] += imp
             
-            self.game.goban.cell = Liste_Aux[k]
+            self.game.goban.cell = Liste_Aux
             
             imp = 0
             
@@ -264,13 +265,5 @@ class Minimax2(Joueur):
             return(self.etape_8(self.etape_7(Liste_Importances2),Liste_Initiale))
         
         else:
-            pass
-        
-            
-
-    
-
-
-
-
+            return 'pass'
         

@@ -130,7 +130,10 @@ def end_game(partie):
     (black_territory, white_territory) = detect_territory(game.goban)
     p1.territory = black_territory
     p2.territory = white_territory
-    display_end_game(partie)
+    if options.minim == True:
+        display_end_game_min(partie)
+    else:
+        display_end_game(partie)
 
 def parse_coord(coord):
     # Pour quitter
