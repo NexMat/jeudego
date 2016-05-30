@@ -139,9 +139,11 @@ class Minimax2(Joueur):
         Fonction qui renvoie la liste des importances des coups possibles
         """
         L = self.liste_coups_possibles()
-        Res = []
+        print(L)
+        Res = [0 for i in range(len(L))]
         for i in range(len(L)) :
-            Res.append(self.quality.importance(L[i][1],L[i][0]))
+            Res[i]+=self.quality.importance(L[i][1],L[i][0])
+        print(Res)
         return Res
 
     def etape_3 (self):
@@ -164,7 +166,7 @@ class Minimax2(Joueur):
         """
         #copie du goban actuel"
         Liste_Goban_Actu = [self.copie_goban() for k in range(len(Liste_Gobans))]
-        Liste_Aux = self.copie_liste(self.game. goban.cell) #DEBUG
+        Liste_Aux = self.copie_liste(self.game.goban.cell) #DEBUG
 
         for k in range(len(Liste_Goban_Actu)) :
                         
@@ -191,8 +193,7 @@ class Minimax2(Joueur):
         #Liste_Aux = [self.copie_goban()for k in range(len(Liste_Importances))] DEBUG
         Liste_Aux = self.copie_liste(self.game.goban.cell)
         imp = 0
-        Liste_Importances2 = self.copie_liste(Liste_Importances)
-        
+                
         for k in range (len(Liste_Gobans)):
             
             self.game.goban.cell = Liste_Gobans[k]
@@ -200,15 +201,16 @@ class Minimax2(Joueur):
             ia = IA_level1((1+self.number)%2,self.game)
             ia.game.goban = self.game.goban
             coup = ia.choose_move()
-            
-            imp = self.quality.importance(coup[0],coup[1])
-            Liste_Importances2[k] += imp
+            print(coup)
+            imp = self.quality.importance(coup[1],coup[0])
+            print(imp)
+            Liste_Importances[k] += imp
             
             self.game.goban.cell = Liste_Aux
             
             imp = 0
             
-        return Liste_Importances2
+        return Liste_Importances
 
     def etape_7 (self, Liste_Importances):
         """
@@ -262,6 +264,8 @@ class Minimax2(Joueur):
             #etape 6 :
             Liste_Importances2 = self.etape_6(Liste_Gobans2 , Liste_Importances)
             #etape 7_8 :
+            print(Liste_Importances)
+            print(Liste_Importances2)
             return(self.etape_8(self.etape_7(Liste_Importances2),Liste_Initiale))
         
         else:

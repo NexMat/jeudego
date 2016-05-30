@@ -77,6 +77,7 @@ class IA_level1(Joueur):
                 pass
 
         if imp_tmp != 0 :
+            print(imp_tmp)
             return coup
         
         #si aucun coup n'est jouable je lance le programme IA_random
@@ -89,6 +90,8 @@ class IA_level1(Joueur):
                     if self.game.goban.test_move(col, lgn, self) == False:
                         coord = (col, lgn)
                         sys.stdout.flush()
+                        print(coord)
+                        print("caca")
                         return coord
                 except Forbidden_move as e:
                     pass
@@ -98,9 +101,11 @@ class IA_level1(Joueur):
                     try: 
                         if not self.game.goban.test_move(col, lgn, self) == False:
                             coord = (col, lgn)
+                            print(coord)
+                            print("caca")
                             return coord
                     except:
                         pass
-
+            print(coord)
             return coord
             
