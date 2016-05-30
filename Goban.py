@@ -183,7 +183,7 @@ class Goban:
         Trouve les libertés d'un groupe et les renvoie sous forme d'une liste
         Arg: goban, le plateau hypothétique
         """
-        list_liberty
+        list_liberty = []
         for (i, j) in group:
             voisins = self.get_neighbour(i, j) + [(i, j)]
             for (k, l) in voisins:

@@ -33,12 +33,13 @@ class Quality :
         # on parcourt les voisins du coup testé
         for (k,l) in self.game.goban.get_neighbour(col,lgn):
             # on test si c'est un emplacement adverse
-            if (self.game.goban.cell[k][l]!= None and self.game.goban.cell[k][l]!= self.joueur.number):
+            if (self.game.goban.cell[k][l]!= None and self.game.goban.cell[k][l] != self.joueur.number):
                 # si le groupe associé a cet emplacement n'a qu'une liberté et
                 # que cette liberté correspond au coup qui va etre joué
                 # on renvoie true
-                if (len(self.game.goban.return_liberty(goban, self.game.goban.find_group(k, l, [], color)))==1 and self.game.goban.return_liberty(goban, self.game.goban.find_group(k, l, [], color))[0]==(k,l)):
-                    return True
+                if (len(self.game.goban.return_liberty(goban, self.game.goban.find_group(k, l, [], color))) == 1):
+                        if self.game.goban.return_liberty(goban, self.game.goban.find_group(k, l, [], color))[0] == (k,l):
+                            return True
         return False
 
     def construct_group(self, col, lgn):
@@ -56,36 +57,39 @@ class Quality :
                 return True
         return False
 
-    def influence(self,col,lgn):
+    def influence(self, col, lgn): # Influence sur les territoiress
         inf = 0
-        a = self.game.goban.detect_territory(goban)
+        a = detect_territory(self.game.goban)
         new_goban = []
-        for old_lines in self.cell:
+        for old_lines in self.game.goban.cell:
             new_goban.append(list(old_lines))
         new_goban[lgn][col] = self.joueur.number
-        b = self.game.goban.detect_territory(new_goban)
-        if length(b)>length(a):
-            inf += (length(b)-length(a))
+        b = detect_territory(new_goban)
+        if len(b[self.joueur.number])>len(a[self.joueur.number]):
+            inf += (length(b[self.joueur.number])-length(a[self.joueur.number]))
         return(inf)
         
 
     def importance(self, col, lgn):
         try:
             ret = self.game.goban.test_move(col, lgn, self.joueur)
-            inf = influence(self,col,lgn)
+            inf = self.influence(col, lgn)
             # S'il n'y a pas de capture
             if ret == False:
-                return (1+inf)
+                print(1 + inf)
+                return (1 + inf)
             # S'il y a capture
             else:
                 imp = 0
                 # On calcule le nombre de pierres utilisées
                 for group in ret:
                     imp += len(group)
+                print( imp * 2 + inf)
                 return imp * 2 + inf
                     
         # S'il y a erreur
-        except:
+        except Forbidden_move as e:
+            cprint("Erreur: coup interdit,", str(e), fg = "red")
             return 0
 
     def fuseki (self,numero):
