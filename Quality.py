@@ -58,15 +58,26 @@ class Quality :
         return False
 
     def influence(self, col, lgn): # Influence sur les territoiress
+        # Influence de départ
         inf = 0
-        a = detect_territory(self.game.goban)
-        new_goban = []
+
+        # Detection des territoires
+        territories = detect_territory(self.game.goban)
+
+        # Nouveau cell
+        new_cell = []
+        # Copie des cells
         for old_lines in self.game.goban.cell:
-            new_goban.append(list(old_lines))
-        new_goban[lgn][col] = self.joueur.number
-        b = detect_territory(new_goban)
-        if len(b[self.joueur.number])>len(a[self.joueur.number]):
-            inf += (length(b[self.joueur.number])-length(a[self.joueur.number]))
+            new_cell.append(list(old_lines))
+        new_cell[lgn][col] = self.joueur.number # Ajout du coup
+
+        # Nouveau goban
+        new_goban = Goban(self.game.goban.taille)
+        new_goban.cell = new_cell
+        new_territories = detect_territory(new_goban)
+
+        if len(new_territories[self.joueur.number])>len(territories[self.joueur.number]):
+            inf += (len(new_territories[self.joueur.number])-len(territories[self.joueur.number]))
         return(inf)
         
 
@@ -76,7 +87,6 @@ class Quality :
             inf = self.influence(col, lgn)
             # S'il n'y a pas de capture
             if ret == False:
-                print(1 + inf)
                 return (1 + inf)
             # S'il y a capture
             else:
@@ -84,12 +94,11 @@ class Quality :
                 # On calcule le nombre de pierres utilisées
                 for group in ret:
                     imp += len(group)
-                print( imp * 2 + inf)
                 return imp * 2 + inf
                     
         # S'il y a erreur
         except Forbidden_move as e:
-            cprint("Erreur: coup interdit,", str(e), fg = "red")
+            #cprint("Erreur: coup interdit,", str(e), fg = "red")
             return 0
 
     def fuseki (self,numero):
