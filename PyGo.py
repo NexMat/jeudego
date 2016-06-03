@@ -50,7 +50,9 @@ def game_loop(game):
         game.player2.update_score()
 
         # Affichage du goban
-        if options.minim == True:
+        if options.quiet_mode == True:
+            pass
+        elif options.minim == True:
        	    round_display_min(game)
         else:
             round_display(game)
@@ -187,6 +189,12 @@ def read_opt():
         action = "store_true",
         dest = "test_mode",
         help = "Test mode (default false). In test mode, any error will stop the program",
+        default = "False")
+    # Parsing test mode
+    parser.add_option("-q", "--quiet",
+        action = "store_true",
+        dest = "quiet_mode",
+        help = "Quiet mode (default false). In quiet mode, only the result is displayed",
         default = "False")
     # Parsing no color display
     parser.add_option("-m", "--min",

@@ -98,7 +98,7 @@ class Quality :
                     
         # S'il y a erreur
         except Forbidden_move as e:
-            #cprint("Erreur: coup interdit,", str(e), fg = "red")
+            cprint("Erreur IA: coup interdit,", str(e), fg = "red")
             return 0
 
     def fuseki (self,numero):
@@ -116,7 +116,7 @@ class Quality :
         grandeur = self.game.goban.taille
         grd = grandeur - 4 
         if (numero == 0) :
-            L = [(2,2),(2,grd)]
+            L = [(2,2), (2,grd)]
             return L
         elif (numero == 1) :
             L = [(grd,3),(grandeur-1,grd),(grd,grd)]

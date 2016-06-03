@@ -54,11 +54,14 @@ class IA_level1(Joueur):
         
         # Debut de partie
         # tant que L n'est pas vide , si le coup est jouable, je le joue
-        for i in range (len(L)) :
+        for (j, i) in L:
             try: 
-                if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
-                    return L[i][0],L[i][1]
+                self.game.goban.test_move(j, i, self) # TODO Laisse passer une exceptio
+                print("coord 0", i, j)
+                return i, j
+
             except:
+                print("pass fus")
                 pass
 
         # je cree une liste des coups non joués
@@ -68,7 +71,7 @@ class IA_level1(Joueur):
         # sinon, je parcours l'ensemble des coups non joués   
         for (i,j) in coord_none :
             importance = self.quality.importance(j, i)
-            print("importance", importance)
+            #print("importance", importance)
             if (importance > imp_tmp): # si le coup est le plus important on le choisit seul
                 coup = (i,j)
                 imp_tmp = importance
@@ -82,19 +85,19 @@ class IA_level1(Joueur):
             #    pass
 
         if imp_tmp != 0:
-            print(imp_tmp)
+            print("coord 1", coup)
             return coup
         
         #si aucun coup n'est jouable je lance le programme IA_random
         else :
             coord = "pass"
-            for i in range(10000):                #on teste aléatoirement 10000 fois 
+            for index in range(10000):                #on teste aléatoirement 10000 fois 
                 col = random.randint(0, self.game.goban.taille - 1)
                 lgn = random.randint(0, self.game.goban.taille - 1)
                 try: 
                     if self.game.goban.test_move(col, lgn, self) == False:
                         coord = (col, lgn)
-                        print(coord)
+                        print("coord 2", coord)
                         return coord
                 except Forbidden_move as e:
                     pass
@@ -104,11 +107,10 @@ class IA_level1(Joueur):
                     try: 
                         if not self.game.goban.test_move(col, lgn, self) == False:
                             coord = (col, lgn)
-                            print(coord)
-                            print("caca")
+                            print("coord 3", coord)
                             return coord
                     except:
                         pass
-            print(coord)
+            print("coord 4", coord)
             return coord
             
