@@ -54,14 +54,12 @@ class IA_level1(Joueur):
         
         # Debut de partie
         # tant que L n'est pas vide , si le coup est jouable, je le joue
-        for (j, i) in L:
+        for (i, j) in L:
             try: 
-                self.game.goban.test_move(j, i, self) # TODO Laisse passer une exceptio
-                print("coord 0", i, j)
-                return i, j
+                print(self.game.goban.test_move(j, i, self))
+                return j, i
 
-            except:
-                print("pass fus")
+            except Forbidden_move as e:
                 pass
 
         # je cree une liste des coups non joués
@@ -73,7 +71,7 @@ class IA_level1(Joueur):
             importance = self.quality.importance(j, i)
             #print("importance", importance)
             if (importance > imp_tmp): # si le coup est le plus important on le choisit seul
-                coup = (i,j)
+                coup = (j, i)
                 imp_tmp = importance
             #try: 
             #    if self.game.goban.test_move(j, i, self) == False:

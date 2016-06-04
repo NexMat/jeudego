@@ -1,6 +1,6 @@
 """
 Quality
-@author: MrChapelle
+@author: MrChapelle, Nexmat
 last update: 21-04-2016
 """
 
@@ -119,7 +119,7 @@ class Quality :
             L = [(2,2), (2,grd)]
             return L
         elif (numero == 1) :
-            L = [(grd,3),(grandeur-1,grd),(grd,grd)]
+            L = [(grd,3), (grandeur-1,grd), (grd,grd)]
             return L
         elif (numero == 2) :
             L = [(grd,3),(grandeur//2,grd+1),(grd,grd)]

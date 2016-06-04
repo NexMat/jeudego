@@ -43,6 +43,8 @@ class Goban:
                 En cas de coup interdit, la fonction lève un erreur.
         """
 
+        #print("\nGoban", lgn, col)
+
         capture = False
         captured_group = []
 
