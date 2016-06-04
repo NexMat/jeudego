@@ -76,12 +76,14 @@ class Quality :
         new_goban.cell = new_cell
         new_territories = detect_territory(new_goban)
 
-        if len(new_territories[self.joueur.number])>len(territories[self.joueur.number]):
-            inf += (len(new_territories[self.joueur.number])-len(territories[self.joueur.number]))
-        return(inf)
+        #if len(new_territories[self.joueur.number])>len(territories[self.joueur.number]):
+        #    inf += (len(new_territories[self.joueur.number])-len(territories[self.joueur.number]))
+        inf = len(new_territories[self.joueur.number]) - len(territories[self.joueur.number])
+        return inf
         
 
     def importance(self, col, lgn):
+        inf = 0
         try:
             ret = self.game.goban.test_move(col, lgn, self.joueur)
             inf = self.influence(col, lgn)
@@ -98,7 +100,7 @@ class Quality :
                     
         # S'il y a erreur
         except Forbidden_move as e:
-            cprint("Erreur IA: coup interdit,", str(e), fg = "red")
+            #cprint("Erreur IA: coup interdit,", str(e), fg = "red")
             return 0
 
     def fuseki (self,numero):

@@ -139,11 +139,11 @@ class Minimax2(Joueur):
         Fonction qui renvoie la liste des importances des coups possibles
         """
         L = self.liste_coups_possibles()
-        print(L)
+        #print(L)
         Res = [0 for i in range(len(L))]
         for i in range(len(L)) :
             Res[i]+=self.quality.importance(L[i][1],L[i][0])
-        print(Res)
+        #print(Res)
         return Res
 
     def etape_3 (self):
@@ -201,9 +201,9 @@ class Minimax2(Joueur):
             ia = IA_level1((1+self.number)%2,self.game)
             ia.game.goban = self.game.goban
             coup = ia.choose_move()
-            print(coup)
+            #print(coup)
             imp = self.quality.importance(coup[1],coup[0])
-            print(imp)
+            #print(imp)
             Liste_Importances[k] += imp
             
             self.game.goban.cell = Liste_Aux
@@ -246,9 +246,10 @@ class Minimax2(Joueur):
         
         for i in range (len(L)) :
             try:
-                if self.game.goban.test_move(L[i][0],L[i][1],self)==False:
-                    return L[i][0],L[i][1]
-            except:
+                self.game.goban.test_move(L[i][1],L[i][0],self)
+                return L[i][1],L[i][0]
+
+            except Forbidden_move as e:
                 pass
             
         
@@ -264,8 +265,8 @@ class Minimax2(Joueur):
             #etape 6 :
             Liste_Importances2 = self.etape_6(Liste_Gobans2 , Liste_Importances)
             #etape 7_8 :
-            print(Liste_Importances)
-            print(Liste_Importances2)
+            #print(Liste_Importances)
+            #print(Liste_Importances2)
             return(self.etape_8(self.etape_7(Liste_Importances2),Liste_Initiale))
         
         else:

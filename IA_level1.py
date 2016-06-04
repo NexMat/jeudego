@@ -82,33 +82,34 @@ class IA_level1(Joueur):
             #except Forbidden_move as e:
             #    pass
 
-        if imp_tmp != 0:
-            print("coord 1", coup)
-            return coup
+        #if imp_tmp != 0:
+        #    print("coord 1", coup)
+        #    return coup
+        return coup
         
         #si aucun coup n'est jouable je lance le programme IA_random
-        else :
-            coord = "pass"
-            for index in range(10000):                #on teste aléatoirement 10000 fois 
-                col = random.randint(0, self.game.goban.taille - 1)
-                lgn = random.randint(0, self.game.goban.taille - 1)
-                try: 
-                    if self.game.goban.test_move(col, lgn, self) == False:
-                        coord = (col, lgn)
-                        print("coord 2", coord)
-                        return coord
-                except Forbidden_move as e:
-                    pass
+        #else :
+        #    coord = "pass"
+        #    for index in range(10000):                #on teste aléatoirement 10000 fois 
+        #        col = random.randint(0, self.game.goban.taille - 1)
+        #        lgn = random.randint(0, self.game.goban.taille - 1)
+        #        try: 
+        #            if self.game.goban.test_move(col, lgn, self) == False:
+        #                coord = (col, lgn)
+        #                print("coord 2", coord)
+        #                return coord
+        #        except Forbidden_move as e:
+        #            pass
 
-            for col in range(self.game.goban.taille):
-                for lgn in range(self.game.goban.taille):
-                    try: 
-                        if not self.game.goban.test_move(col, lgn, self) == False:
-                            coord = (col, lgn)
-                            print("coord 3", coord)
-                            return coord
-                    except:
-                        pass
-            print("coord 4", coord)
-            return coord
+        #    for col in range(self.game.goban.taille):
+        #        for lgn in range(self.game.goban.taille):
+        #            try: 
+        #                if not self.game.goban.test_move(col, lgn, self) == False:
+        #                    coord = (col, lgn)
+        #                    print("coord 3", coord)
+        #                    return coord
+        #            except:
+        #                pass
+        #    print("coord 4", coord)
+        #    return coord
             

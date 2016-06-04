@@ -1,3 +1,4 @@
+import sys
 from Colors import cprint
 
 HR_LINE = chr(9472)
@@ -121,6 +122,7 @@ def round_display(partie):
     else: 
         cprint("blanc ", fg = "white",  bg = "blue", end = "")
     cprint(">> ", fg = "white",  bg = "blue", end = "")
+    sys.stdout.flush()
 
 def round_display_min(partie):
     # On affiche le numéro du tour
@@ -146,6 +148,7 @@ def round_display_min(partie):
     else: 
         print("blanc ", end = "")
     print(">>", end = "")
+    sys.stdout.flush()
 
 
 def display_end_game(partie):

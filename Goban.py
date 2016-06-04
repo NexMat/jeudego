@@ -81,7 +81,7 @@ class Goban:
                 group = self.find_group(i, j, [], self.cell[i][j])
 
                 # Determine si le groupe a une liberté ou non
-                if not self.find_liberty(new_goban, group):
+                if not self.find_liberty(new_goban, group) and not self.edge_extend(new_goban, group):
                     capture = True
                     captured_group.append(group)
 
@@ -178,6 +178,22 @@ class Goban:
                 if goban[k][l] == None:
                     return True
         return False
+
+    def edge_extend(self, goban, group):
+        """Si un groupe s'étend de gauche à doite ou de haut en bas
+        alors il ne peut être capturé """
+        top, bot, left, right = False, False, False, False
+        for (i, j) in group:
+            if i == 0:
+                top = True
+            elif i == self.taille - 1:
+                bot = True
+
+            if j == 0:
+                left = True
+            elif j == self.taille - 1:
+                right = True
+        return (top and bot) or (left and right)
 
 
     def return_liberty(self, goban, group):
